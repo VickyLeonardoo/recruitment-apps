@@ -15,7 +15,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-10 flex flex-col gap-y-5">
                 <form method="POST" action="{{ route('staff.update',$staff) }}" enctype="multipart/form-data">
                     @csrf
-                    
+                    @method('PUT')
                     
                     <div class="mt-4">
                         <x-input-label for="name" :value="__('Name')" />

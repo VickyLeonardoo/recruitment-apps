@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\ChoiceController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\StaffController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +36,20 @@ Route::middleware('auth')->group(function () {
     ->middleware('role:superadmin');
 
     Route::resource('staff',StaffController::class)
+    ->middleware('role:superadmin');
+
+    Route::resource('question',QuestionController::class)
+    ->middleware('role:superadmin');
+
+    Route::get('/add/choice/{question:id}', [ChoiceController::class, 'create'])
+        ->middleware('role:superadmin')
+        ->name('question.create.choice');
+
+    Route::post('/add/choice/store/{question:id}', [ChoiceController::class, 'store'])
+        ->middleware('role:superadmin')
+        ->name('question.store.choice');
+
+    Route::resource('choice',ChoiceController::class)
     ->middleware('role:superadmin');
 
 });

@@ -15,16 +15,21 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @if (session('success'))
-                <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-200 dark:bg-gray-800 dark:text-green-400"
-                    role="alert">
+                <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-200 dark:bg-gray-800 dark:text-green-400 relative" role="alert">
                     <span class="font-medium">{{ session('success') }}!</span>
+                    <!-- Tombol silang dengan SVG -->
+                    <button type="button" class="absolute top-0 right-0 p-4 rounded-md text-green-600 hover:bg-green-300 hover:text-green-800" aria-label="Close" onclick="this.parentElement.style.display='none';">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
                 </div>
             @endif
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-10 flex flex-col gap-y-5">
                 <div class="flex flex-col md:flex-row justify-end items-center mb-6">
                     <!-- Ganti justify-between menjadi justify-end -->
                     <form method="GET" action="{{ route('department.index') }}" class="flex w-full md:w-auto">
-                        <input type="text" name="search" placeholder="Cari Department"
+                        <input type="text" name="search" placeholder="Search Department"
                             class="rounded-l-full w-full md:w-64 border-gray-300 focus:border-red-300 focus:ring focus:ring-red-200 focus:ring-opacity-50"
                             value="{{ request('search') }}">
                         <button type="submit"

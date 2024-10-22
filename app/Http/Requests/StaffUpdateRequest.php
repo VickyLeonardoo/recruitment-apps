@@ -23,18 +23,20 @@ class StaffUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        $departmentId = $this->route('users'); // Pastikan nama parameter route sesuai
+        // Ambil user ID dari rute (jika ada)
+        $staff = $this->route('staff');
+        $userId = $staff ? $staff->user_id : null;
 
         return [
-            'name' => 'required',
-            'department_id' => 'required',
-            'role' => 'required',
+            'name' => 'required|string|max:255',
             'email' => [
                 'required',
                 'email',
                 'max:255',
-                Rule::unique(User::class)->ignore($departmentId),
+                Rule::unique('users')->ignore($userId), // Abaikan user terkait untuk validasi email unik
             ],
+            'department_id' => 'required|exists:departments,id',
+            'role' => 'required'
         ];
     }
 }

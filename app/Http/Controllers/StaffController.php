@@ -108,10 +108,40 @@ class StaffController extends Controller
      */
     public function update(StaffUpdateRequest $request, Staff $staff)
     {
+        // Validasi data
         $data = $request->validated();
 
-        
-        
+        // Ambil role saat ini dari user terkait
+        $currentRole = $staff->user->getRoleNames()->first(); // Asumsi hanya satu role
+
+        // Update nama user
+        $staff->user->name = $data['name'];
+
+        // Jika email berubah, set email baru dan hapus verifikasi email
+        if ($staff->user->email !== $data['email']) {
+            $staff->user->email = $data['email'];
+            $staff->user->email_verified_at = null; // Email verifikasi direset
+        }
+
+        // Jika role berubah, update role user
+        if ($currentRole !== $data['role']) {
+            // Hapus role lama
+            $staff->user->removeRole($currentRole);
+
+            // Assign role baru
+            $staff->user->assignRole($data['role']);
+        }
+
+        // Update department
+        $staff->department_id = $data['department_id'];
+
+        // Simpan perubahan di model User
+        $staff->user->save();
+
+        // Simpan perubahan di model Staff
+        $staff->save();
+
+        return redirect()->route('staff.index')->with('success', 'Staff updated successfully.');
     }
 
     /**
