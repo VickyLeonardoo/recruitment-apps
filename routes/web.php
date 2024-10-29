@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ChoiceController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\JobVacancyController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionController;
@@ -14,6 +15,8 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
+
+
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -51,6 +54,27 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('choice',ChoiceController::class)
     ->middleware('role:superadmin');
+
+    Route::get('/set/draft/{job:id}', [JobVacancyController::class, 'set_to_draft'])
+        ->middleware('role:superadmin')
+        ->name('job.set.draft');
+
+    Route::get('/set/cancel/{job:id}', [JobVacancyController::class, 'set_to_cancel'])
+        ->middleware('role:superadmin')
+        ->name('job.set.cancel');
+
+    Route::get('/set/active/{job:id}', [JobVacancyController::class, 'set_to_active'])
+        ->middleware('role:superadmin')
+        ->name('job.set.active');
+
+    Route::get('/set/done/{job:id}', [JobVacancyController::class, 'set_to_done'])
+        ->middleware('role:superadmin')
+        ->name('job.set.done');
+
+    Route::resource('job',JobVacancyController::class)
+    ->middleware('role:superadmin');
+
+    
 
 });
 

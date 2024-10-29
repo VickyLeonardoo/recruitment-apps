@@ -54,7 +54,7 @@
                                 Name</th>
                             <th
                                 class="bg-red-50 sticky top-0 border-b border-gray-200 px-6 py-3 text-red-600 font-bold tracking-wider uppercase text-xs">
-                                Aksi</th>
+                                Action</th>
                         </tr>
                     </thead>
                     <tbody id="users-table-body">

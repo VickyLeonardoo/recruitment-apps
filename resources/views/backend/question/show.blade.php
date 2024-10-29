@@ -66,10 +66,10 @@
                 </div>
 
                 @foreach($question->choice as $choice)
-                <div class="item-card flex flex-row gap-y-10 justify-between items-center">
+                <div class="item-card flex flex-row gap-y-10 justify-between items-center border-b-2 ">
                     <div class="flex flex-row items-center gap-x-3">
                         @if ($choice->answerImage)
-                        <img src="{{ Storage::url($question->image) }}" alt="" class="rounded-2xl object-cover w-[120px] h-[90px]">
+                        <img src="{{ Storage::url($choice->answerImage) }}" alt="" class="rounded-2xl object-cover w-[120px] h-[90px]">
                         @endif
 
                         <div class="flex flex-col">
@@ -77,15 +77,22 @@
                                 <h3 class="text-indigo-950 text-xl font-bold">{{ $choice->answerText }}</h3>
                             @endif
                             <p class="text-slate-500 text-sm">{{ $choice->label }}</p>
+                            @if($choice->is_correct)
+                            <p class="text-green-500 text-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="inline h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </p>
+                            @endif
                         </div>
                     </div>
 
                     
                     <div class="flex flex-row items-center gap-x-3">
-                        <a href="{{ route('position.edit',$choice) }}" class="font-bold py-2 px-4 bg-indigo-700 text-white rounded-full">
+                        <a href="{{ route('choice.edit',$choice) }}" class="font-bold py-2 px-4 bg-indigo-700 text-white rounded-full">
                             Edit
                         </a>
-                        <form action="{{ route('position.destroy',$choice) }}" method="POST">
+                        <form action="{{ route('choice.destroy',$choice) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="font-bold py-2 px-4 bg-red-700 text-white rounded-full">
@@ -96,7 +103,6 @@
                             </button>
                         </form>
                     </div>
-                    
                 </div>
                 @endforeach
                 

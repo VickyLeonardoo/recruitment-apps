@@ -22,7 +22,10 @@ class ChoiceUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'label' => 'required',
+            'answerText' => 'sometimes',
+            'answerImage' => 'sometimes','mimes:png,jpg',
+            'is_correct' => 'sometimes',
         ];
     }
 }

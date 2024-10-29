@@ -55,7 +55,6 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-10 flex flex-col gap-y-5">
                 <form method="POST" action="{{ route('question.store.choice',$question) }}" enctype="multipart/form-data">
                     @csrf
-                    
                     <div class="mt-4">
                         <x-input-label for="label" :value="__('Label')" />
                         <x-text-input id="label" class="block mt-1 w-full" type="text" name="label" :value="old('label')" required autofocus autocomplete="label" />
@@ -79,13 +78,7 @@
                 
                     <!-- Checkbox for Is Correct -->
                     <div class="mt-4 flex items-center">
-                        <input 
-                            id="is_correct" 
-                            type="checkbox" 
-                            name="is_correct" 
-                            class="mr-2" 
-                            style="width: 24px; height: 24px;" 
-                        />
+                        <input id="is_correct" type="checkbox" name="is_correct" class="mr-2" style="width: 24px; height: 24px;" />
                         <x-input-label for="is_correct" :value="__('Is Correct')" />
                     </div>
                     

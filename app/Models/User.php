@@ -22,7 +22,17 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
-        'email_verified_at'
+        'email_verified_at',
+        'identity_no',
+        'phone',
+        'address',
+        'city',
+        'dob',
+        'gender',
+        'status',
+        'nationality',
+        'religion',
+        'profile_picture',
     ];
 
     /**
@@ -47,4 +57,21 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
         ];
     }
+
+    public function education_details(){
+        return $this->hasMany(EducationDetail::class);
+    }
+
+    public function experience_details(){
+        return $this->hasMany(ExperienceDetail::class);
+    }
+
+    public function skill_details(){
+        return $this->hasMany(Skill::class);
+    }
+
+    public function language_details(){
+        return $this->hasMany(LanguageDetails::class);
+    }
 }
+ 

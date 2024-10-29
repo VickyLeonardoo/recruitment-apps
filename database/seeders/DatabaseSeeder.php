@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RolePermissionSeeder::class,
             DepartmentSeeder::class,
+            QuestionSeeder::class,
+            ChoiceSeeder::class,
         ]);
     }
 }
