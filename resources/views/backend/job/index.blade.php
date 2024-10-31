@@ -65,16 +65,19 @@
                     </thead>
                     <tbody id="users-table-body">
                         @forelse ($jobs as $job)
-                            <tr>
-                                <td class="border-b border-gray-200 px-6 py-4">{{ $job->code }}</td>
-                                <td class="border-b border-gray-200 px-6 py-4">{{ $job->position->name }}</td>
-                                <td class="border-b border-gray-200 px-6 py-4 text-center">@formatDate($job->start_date) - @formatDate($job->end_date)</td>
-                                <td class="border-b border-gray-200 px-6 py-4">{{ $job->status }}</td>
-                                <td class="border-b border-gray-200 px-6 py-4">
-                                    <a href="{{ route('job.show', $job) }}" class="font-bold py-2 px-4 bg-indigo-700 hover:bg-indigo-400 text-white rounded-lg">View</a>
-                                    <a href="{{ route('job.show', $job) }}" class="font-bold py-2 px-4 bg-emerald-600 hover:bg-emerald-300 text-white rounded-lg">Applicant</a>
-                                </td>
-                            <tr>
+                                <tr>
+                                    <td class="border-b border-gray-200 px-6 py-4">{{ $job->code }}</td>
+                                    <td class="border-b border-gray-200 px-6 py-4">{{ $job->position->name }}</td>
+                                    <td class="border-b border-gray-200 px-6 py-4 text-center">@formatDate($job->start_date) - @formatDate($job->end_date)</td>
+                                    <td class="border-b border-gray-200 px-6 py-4">{{ $job->status }}</td>
+                                    <td class="border-b border-gray-200 px-6 py-4">
+                                        <a href="{{ route('job.show', $job) }}" class="font-bold py-2 px-4 bg-indigo-700 hover:bg-indigo-400 text-white rounded-lg">View</a>
+                                        <a href="{{ route('application.index',$job) }}" class="inline-flex items-center bg-emerald-600 text-white rounded-lg overflow-hidden hover:bg-emerald-700 transition duration-300">
+                                            <span class="px-4 py-2 bg-emerald-800 text-white">{{ $job->application->count() }}</span>
+                                            <span class="px-4 py-2">Applicant</span>
+                                        </a>
+                                    </td>
+                                <tr>
                         @empty
                         <tr>
                             <td colspan="4" class="text-center border-b border-gray-200 px-6 py-4">No data found</td>

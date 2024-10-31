@@ -14,4 +14,12 @@ class JobVacancy extends Model
     public function position(){
         return $this->belongsTo(Position::class);
     }
+
+    public function application(){
+        return $this->hasMany(Application::class);
+    }
+
+    public function schedule(){
+        return $this->hasMany(Schedule::class);
+    }
 }

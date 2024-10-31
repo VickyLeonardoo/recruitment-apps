@@ -15,7 +15,7 @@ class JobVacancyController extends Controller
      */
     public function index(Request $request)
     {
-        $jobs = JobVacancy::with('position'); // Load posisi dari awal
+        $jobs = JobVacancy::with('position')->with('application'); // Load posisi dari awal
 
         if ($request->has('search')) {
             $query = $request->search;
@@ -148,6 +148,10 @@ class JobVacancyController extends Controller
         $job->status = 'Done';
         $job->save();
         return redirect()->route('job.show',$job)->with('success','Job Updated Successfully');
+    }
+
+    public function view_applicant(JobVacancy $job){
+     
     }
 
 }

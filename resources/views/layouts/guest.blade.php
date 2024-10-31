@@ -15,10 +15,11 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
+        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-slate-300">
             <div>
-                <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                <a href="/" class="flex items-center space-x-2">
+                    <img src="https://www.svgrepo.com/show/324381/search-career-work-job-recruitment-employee-2.svg" alt="Logo Sanmax Laundry" class="h-12 w-12">
+                    <span class="text-2xl font-bold text-blue-400">Recruitment Xyz</span>
                 </a>
             </div>
 

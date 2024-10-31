@@ -121,7 +121,7 @@ class TestController extends Controller
 
     public function submitApplication($id)
     {
-        $test = Test::find($id);
+        $test = Test::find($id); 
         if (!$test->end_time) {
             // Jika belum, set waktu mulai dan status tes
             $test->end_time = now();
@@ -129,6 +129,6 @@ class TestController extends Controller
             $test->save();
         }
         
-        return redirect()->route('applicant.application.detail',$test->application->id)->with('success','Tes telah selesai!');
+        return redirect()->route('applicant.application.show',$test->application)->with('success','Tes telah selesai!');
     }
 }

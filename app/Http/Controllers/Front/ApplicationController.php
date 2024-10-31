@@ -19,7 +19,7 @@ class ApplicationController extends Controller
     {
         $user_id = auth()->user()->id;
         $apps = Application::where('user_id', $user_id)->get();
-        return view('applicant.application.index',[
+        return view('frontend.application.index',[
             'apps' => $apps
         ]);
     }

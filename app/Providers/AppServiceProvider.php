@@ -23,5 +23,9 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('formatDate', function ($expression) {
             return "<?php echo ($expression) ? Carbon\Carbon::parse($expression)->format('d-m-Y') : ''; ?>";
         });
+
+        Blade::directive('formatTime', function ($expression) {
+            return "<?php echo ($expression) ? Carbon\Carbon::parse($expression)->format('H:i') : ''; ?>";
+        });
     }
 }

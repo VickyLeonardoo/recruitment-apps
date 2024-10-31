@@ -16,15 +16,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($apps as $apl)
+                            @foreach ($apps as $application)
                                 <tr>
                                     <td>
-                                        <a href="{{ route('applicant.application.detail', $apl->id) }}" class="btn btn-dark text-white">Detail</a>
+                                        <a href="{{ route('applicant.application.show', $application) }}" class="btn btn-dark text-white">Detail</a>
                                     </td>
-                                    <td>{{ $apl->reg_no }}</td>
-                                    <td>{{ $apl->job?->code ?? 'N/A' }}</td>
-                                    <td>{{ $apl->created_at }}</td>
-                                    <td>{{ $apl->status }}</td>
+                                    <td>{{ $application->reg_no }}</td>
+                                    <td>{{ $application->job?->code ?? 'N/A' }}</td>
+                                    <td>{{ $application->created_at }}</td>
+                                    <td>{{ $application->status }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
