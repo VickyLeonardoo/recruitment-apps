@@ -16,4 +16,8 @@ class Schedule extends Model
         return $this->belongsTo(JobVacancy::class,'job_vacancy_id');
     }
 
+    public function line(){
+        return $this->hasMany(ScheduleLine::class);
+    }
+
 }

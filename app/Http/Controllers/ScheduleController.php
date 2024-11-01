@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ScheduleStoreRequest;
-use App\Models\JobVacancy;
 use App\Models\Schedule;
+use App\Models\JobVacancy;
+use App\Models\Application;
+use App\Models\ScheduleLine;
 use Illuminate\Http\Request;
+use App\Http\Requests\ScheduleStoreRequest;
+use App\Http\Requests\ScheduleUpdateRequest;
 
 class ScheduleController extends Controller
 {
@@ -96,7 +99,11 @@ class ScheduleController extends Controller
      */
     public function show(Schedule $schedule)
     {
-        //
+        $applicants = $schedule->job->application()->where('status', 'interview')->where('is_interview',false)->get();
+        return view('backend.schedule.show',[
+            'schedule' => $schedule,
+            'applicants' => $applicants,
+        ]);
     }
 
     /**
@@ -104,15 +111,23 @@ class ScheduleController extends Controller
      */
     public function edit(Schedule $schedule)
     {
-        //
+        $jobs = JobVacancy::where('status', 'Active')->with('position')->get();
+
+        return view('backend.schedule.edit',[
+            'jobs' => $jobs,
+            'schedule' => $schedule,
+        ]);
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Schedule $schedule)
+    public function update(ScheduleUpdateRequest $request, Schedule $schedule)
     {
-        //
+        $data = $request->validated();
+        $schedule->update($data);
+        return redirect()->route('schedule.show',$schedule)->with('success','Schedule has been updated successfully.');
     }
 
     /**
@@ -120,6 +135,35 @@ class ScheduleController extends Controller
      */
     public function destroy(Schedule $schedule)
     {
-        //
+        if ($schedule->status != 'Draft' && $schedule->status != 'Cancelled') {
+            return redirect()->back()->with('error', 'You can only delete draft or cancelled schedules.');
+        }
+        $schedule->delete();
+        return redirect()->route('schedule.index')->with('success', 'Schedule has been deleted successfully.');
     }
+
+    public function generate_applicant(Request $request, $id)
+    {
+        $schedule = Schedule::find($id);
+
+        // Retrieve only the selected applicants with the given IDs and 'Interview' status
+        $applicantIds = $request->input('applicant_ids', []);
+        $applications = Application::whereIn('id', $applicantIds)
+                                ->where('status', 'Interview')
+                                ->where('is_interview', false)
+                                ->where('job_vacancy_id', $schedule->job_vacancy_id)
+                                ->get();
+
+        foreach ($applications as $application) {
+            ScheduleLine::create([
+                'schedule_id' => $id,
+                'application_id' => $application->id,
+            ]);
+            $application->is_interview = true;
+            $application->save();
+        }
+
+        return response()->json(['success' => 'Applicants generated successfully.']);
+    }
+
 }

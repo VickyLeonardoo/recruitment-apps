@@ -1,15 +1,16 @@
 <?php
 
-use App\Http\Controllers\ApplicationController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\StaffController;
 use App\Http\Controllers\ChoiceController;
-use App\Http\Controllers\DepartmentController;
-use App\Http\Controllers\JobVacancyController;
-use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PositionController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ScheduleController;
-use App\Http\Controllers\StaffController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\JobVacancyController;
+use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\ScheduleLineController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -108,9 +109,12 @@ Route::middleware('auth')->group(function () {
         ->except(['index'])
         ->middleware('role:superadmin');
 
+    Route::post('/schedules/{id}/generate-applicants', [ScheduleController::class, 'generate_applicant'])->name('schedules.generate.applicants');
+
     Route::resource('schedule', ScheduleController::class)
         ->middleware('role:superadmin');
 
+    Route::delete('/schedule/line/{line}', [ScheduleLineController::class, 'destroy'])->name('schedule.line.destroy');
 });
 
 require __DIR__.'/auth.php';

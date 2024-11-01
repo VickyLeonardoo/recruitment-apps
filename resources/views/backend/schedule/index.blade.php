@@ -67,7 +67,7 @@
                                 <td class="border-b border-gray-200 px-6 py-4">{{ $schedule->job->position->code }}</td>
                                 <td class="border-b border-gray-200 px-6 py-4">@formatDate($schedule->date) / @formatTime($schedule->start_time) - @formatTime($schedule->end_time)</td>
                                 <td class="border-b border-gray-200 px-6 py-4">
-                                    <a href="{{ route('department.show', $schedule) }}" class="font-bold py-2 px-4 bg-indigo-700 hover:bg-indigo-400 text-white rounded-lg">View</a>
+                                    <a href="{{ route('schedule.show', $schedule) }}" class="font-bold py-2 px-4 bg-indigo-700 hover:bg-indigo-400 text-white rounded-lg">View</a>
                                 </td>
                             <tr>
                         @empty
