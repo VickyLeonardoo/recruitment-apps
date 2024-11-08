@@ -7,8 +7,11 @@ use App\Models\JobVacancy;
 use App\Models\Application;
 use App\Models\ScheduleLine;
 use Illuminate\Http\Request;
+use App\Mail\InviteInterviewMail;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\ScheduleStoreRequest;
 use App\Http\Requests\ScheduleUpdateRequest;
+use App\Mail\CancelInterviewMail;
 
 class ScheduleController extends Controller
 {
@@ -19,7 +22,7 @@ class ScheduleController extends Controller
     {
         $schedules = Schedule::query(); // Inisialisasi query
 
-        if ($request->has('search')) {
+        if ($request->has('search')) { 
             $query = $request->search;
         
             // Tambahkan pencarian pada kolom 'name', 'email', dan 'position name'
@@ -138,6 +141,13 @@ class ScheduleController extends Controller
         if ($schedule->status != 'Draft' && $schedule->status != 'Cancelled') {
             return redirect()->back()->with('error', 'You can only delete draft or cancelled schedules.');
         }
+
+        if ($schedule->line->count() > 0) {
+            foreach ($schedule->line as $line) {
+                $line->application->is_interview = false;
+                $line->application->save();
+            }
+        }
         $schedule->delete();
         return redirect()->route('schedule.index')->with('success', 'Schedule has been deleted successfully.');
     }
@@ -164,6 +174,63 @@ class ScheduleController extends Controller
         }
 
         return response()->json(['success' => 'Applicants generated successfully.']);
+    }
+
+    public function set_draft(Schedule $schedule){
+        
+        $schedule->update(['status' => 'Draft']);
+
+        $schedule->is_email = false;
+        $schedule->save();
+
+        return redirect()->back()->with('success','Status successfully updated to draft');
+
+    }
+
+    public function set_upcoming(Schedule $schedule){
+        $schedule->status = 'Upcoming';
+        $schedule->save();
+
+        return redirect()->back()->with('success','Status successfully updated to upcoming');
+    }
+
+    public function set_cancelled(Schedule $schedule){
+        
+        $users = $schedule->line->pluck('application.user')->unique();
+        foreach ($users as $user) {
+            Mail::to($user->email)->send(new CancelInterviewMail($schedule,$user));
+        }
+            $schedule->update(['status' => 'Cancelled']);
+
+        return redirect()->back()->with('success','Status successfully updated to cancelled');
+
+    }
+
+    public function set_done(Schedule $schedule){
+        $schedule->status = 'Done';
+        $schedule->save();
+
+        return redirect()->back()->with('success','Status successfully updated to upcoming');
+    }
+
+    public function sent_invitation_mail(Schedule $schedule)
+    {
+        // Eager load relasi line, application, dan user, serta filter line dengan is_mail = false
+
+        // Ambil semua user dari setiap line->application
+        if ($schedule->is_email == true) {
+            return redirect()->back()->with('error','Email has been sent already');
+        }
+        $users = $schedule->line->pluck('application.user')->unique();
+        // Proses pengiriman email hanya untuk yang is_mail = false
+        foreach ($users as $user) {
+            Mail::to($user->email)->send(new InviteInterviewMail($schedule,$user));
+        }
+
+        $schedule->is_email = true;
+        $schedule->save();
+
+        return redirect()->back()->with('success','Success send email');
     }
 
 }

@@ -11,19 +11,62 @@ class ApplicationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($job = null)
-    {
-        if ($job) {
-            $job = JobVacancy::find($job);
-            $applications = $job ? $job->application()->paginate(10) : collect();
-        } else {
-            $applications = Application::paginate(10);
-        }
 
+     public function index(Request $request, $job = null)
+     {
+         // Initialize the query with optional filtering by job ID
+         $applications = Application::query();
+         $jobFind = JobVacancy::find($job);
+         // Filter by Job ID if provided
+         if ($job) {
+             $applications->where('job_vacancy_id', $job);
+         }
+     
+         // Check if search query is present in the request
+         if ($request->has('search')) { 
+            $query = $request->search;
+    
+            // Add search conditions
+            $applications->where(function ($q) use ($query) {
+                // Search in the applications table
+                $q->where('created_at', 'like', "%{$query}%")
+                  ->orWhere('reg_no', 'like', "%{$query}%")
+                  
+                  // Search in the job table for 'code' and 'start_time'
+                  ->orWhereHas('job', function ($q) use ($query) {
+                      $q->where('code', 'like', "%{$query}%")
+                        ->orWhere('start_date', 'like', "%{$query}%");
+                  })
+                  
+                  // Directly search in the user table related to application
+                  ->orWhereHas('user', function ($q) use ($query) {
+                      $q->where('name', 'like', "%{$query}%");
+                  });
+            });
+        }
+     
+         // Paginate the results
+         $applications = $applications->paginate(10);
         return view('backend.application.index', [
             'applications' => $applications,
+            'job' => $jobFind,
         ]);
     }
+
+    // public function index($job = null)
+    // {
+    //     if ($job) {
+    //         $job = JobVacancy::find($job);
+    //         $applications = $job ? $job->application()->paginate(10) : collect();
+    //     } else {
+    //         $applications = Application::paginate(10);
+    //     }
+
+    //     return view('backend.application.index', [
+    //         'applications' => $applications,
+    //         'job' => $job,
+    //     ]);
+    // }
 
     /**
      * Show the form for creating a new resource.

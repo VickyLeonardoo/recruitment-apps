@@ -37,7 +37,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <p class="register-label">Nama Lengkap: </p>
-                                    <p class="mb-3">{{ $user->full_name }}</p>
+                                    <p class="mb-3">{{ $user->name }}</p>
                                     <p class="register-label">Agama</p>
                                     <p class="mb-3">{{ $user->religion }}</p>
                                     <p class="register-label">Status</p>

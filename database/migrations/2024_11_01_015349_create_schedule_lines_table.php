@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('schedule_lines', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('schedule_id')->references('id')->on('schedules');
+            $table->foreignId('schedule_id')->references('id')->on('schedules')->onDelete('cascade');
             $table->foreignId('application_id')->references('id')->on('applications');
             $table->enum('result',['Pending','Approved','Rejected']);
             $table->boolean('is_mark')->default(false);

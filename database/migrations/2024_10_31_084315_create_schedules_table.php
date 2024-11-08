@@ -19,6 +19,7 @@ return new class extends Migration
             $table->time('end_time');
             $table->enum('status',['Draft','Cancelled','Upcoming','Done']);
             $table->boolean('is_active')->default(true);
+            $table->boolean('is_email')->default(false);
             $table->timestamps();
         });
     }

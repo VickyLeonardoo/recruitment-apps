@@ -42,6 +42,14 @@ class RolePermissionSeeder extends Seeder
             'email_verified_at' => '2021-01-01 00:00:00',
         ]);
 
+        $user = User::create([
+            'name' => 'Ordep',
+            'email' => 'user@example.com',
+            'password' => bcrypt('123'),
+            'email_verified_at' => '2021-01-01 00:00:00',
+        ]);
+
         $userSuperAdmin->assignRole($superAdminRole);
+        $user->assignRole($applicant);
     }
 }

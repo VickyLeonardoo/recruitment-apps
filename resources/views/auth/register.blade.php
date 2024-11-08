@@ -110,7 +110,7 @@
                                         <div class="col-lg-6">
 											<div class="mb-3">
 												<label class="register-label">Tanggal Lahir</label>
-												<input type="text" class="form-register datepicker" name="dob"
+												<input type="date" class="form-register datepicker" name="dob"
 													placeholder="Masukkan tanggal lahir" id="datepicker" value="{{ old('dob') }}" aria-describedby="basic-addon1" />
 												@error('dob')
 													<p class="text-danger">{{ $message }}</p>

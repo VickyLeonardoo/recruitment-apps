@@ -45,7 +45,52 @@
                     </button>
                 </div>
             @endif
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-10 flex flex-col gap-y-5">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-10 flex flex-col gap-y-5 relative">
+                {{-- Ribon --}}
+                @if ($schedule->status == 'Done')
+                    <div class="absolute transform rotate-45 bg-green-600 text-center text-white font-semibold py-1 right-[-35px] top-[32px] w-[170px]">
+                        {{ $schedule->status }}
+                    </div>
+                @elseif($schedule->status == 'Cancelled')
+                    <div class="absolute transform rotate-45 bg-red-600 text-center text-white font-semibold py-1 right-[-35px] top-[32px] w-[170px]">
+                        {{ $schedule->status }}
+                    </div>
+                @elseif($schedule->status == 'Draft')
+                    <div class="absolute transform rotate-45 bg-gray-600 text-center text-white font-semibold py-1 right-[-35px] top-[32px] w-[170px]">
+                        {{ $schedule->status }}
+                    </div>
+                @elseif($schedule->status == 'Upcoming')
+                    <div class="absolute transform rotate-45 bg-blue-600 text-center text-white font-semibold py-1 right-[-35px] top-[32px] w-[170px]">
+                        {{ $schedule->status }}
+                    </div>
+                @endif
+
+                <div class="flex justify-between mb-4 md:mb-0">
+                    <div class="flex space-x-2 mb-4 md:mb-0">
+                        @if ($schedule->status == 'Upcoming')
+                            <a href="{{ route('schedule.set.cancelled', $schedule) }}" onclick="confirmSetDraft(event)"
+                                class="border border-red-600 text-red-600 px-4 py-2 rounded-lg hover:bg-red-600 hover:text-white transition duration-300">Cancelled</a>
+                            <a href="{{ route('schedule.set.done', $schedule) }}"
+                                class="border border-green-600 text-green-600 px-4 py-2 rounded-lg hover:bg-green-600 hover:text-white transition duration-300">Done</a>
+                                @if ($schedule->status == 'Upcoming' && $schedule->is_email == false)
+                                    <form action="{{ route('schedules.sent.invitation', $schedule) }}" method="POST">
+                                        @csrf
+                                        <button type="submit"
+                                            class="border border-violet-600 text-violet-600 px-4 py-2 rounded-lg hover:bg-violet-600 hover:text-white transition duration-300">
+                                            Mail Invitation
+                                        </button>
+                                    </form>
+                                @endif
+                        @elseif($schedule->status == 'Draft')
+                            <a href="{{ route('schedule.set.upcoming', $schedule) }}"
+                                class="border border-blue-600 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition duration-300">Upcoming</a>
+                        @elseif($schedule->status == 'Cancelled')
+                            <a href="{{ route('schedule.set.draft', $schedule) }}"
+                                class="border border-gray-600 text-gray-600 px-4 py-2 rounded-lg hover:bg-gray-600 hover:text-white transition duration-300">Draft</a>
+                        @endif
+                    </div>
+                    
+                </div>
                 <div class="item-card flex flex-row gap-y-10 justify-between items-center">
                     <div class="flex flex-row items-center gap-x-3">
                         <div class="flex flex-col">
@@ -59,11 +104,17 @@
                     </div>
                     <div class="flex flex-col">
                         <p class="text-slate-500 text-sm">Time</p>
-
-                        {{-- <h3 class="text-indigo-950 text-xl font-bold">{{ $schedule->position->count() }}</h3> --}}
                         <h3 class="text-indigo-950 text-xl font-bold">@formatTime($schedule->start_time) - @formatTime($schedule->end_time)</h3>
                     </div>
+                    <div class="flex flex-col">
+                        <p class="text-slate-500 text-sm">Mail</p>
+                        <h3 class="text-indigo-950 text-xl font-bold"><input type="checkbox"
+                                {{ $schedule->is_email == true ? 'checked' : '' }} style="transform: scale(1.4);"
+                                disabled></h3>
+                    </div>
+                    
                     <div class="flex flex-row items-center gap-x-3">
+                        @if ($schedule->status != 'Done')
                         <a href="{{ route('schedule.edit', $schedule->id) }}"
                             class="font-bold py-2 px-4 bg-indigo-700 hover:bg-indigo-400 text-white rounded-full">
                             Edit schedule
@@ -76,6 +127,7 @@
                                 Delete
                             </button>
                         </form>
+                        @endif
                     </div>
                 </div>
 
@@ -87,14 +139,15 @@
                         <p class="text-slate-500 text-sm">{{ $schedule->line->count() }} Total Applicant</p>
                     </div>
                     <!-- Trigger Button -->
-                    <button class="font-bold py-2 px-4 bg-indigo-700 hover:bg-indigo-400 text-white rounded-full"
-                        onclick="toggleModal(true)">
-                        Generate
-                    </button>
+
                 </div>
                 <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
                     <thead>
                         <tr class="text-left">
+                            <th
+                                class="bg-sky-50 sticky top-0 border-b border-gray-200 px-6 py-3 text-sky-600 font-bold tracking-wider uppercase text-xs">
+                                <input type="checkbox" style="transform: scale(1.3);" onclick="toggleCheckboxes(this)">
+                            </th>
                             <th
                                 class="bg-sky-50 sticky top-0 border-b border-gray-200 px-6 py-3 text-sky-600 font-bold tracking-wider uppercase text-xs">
                                 Job Code</th>
@@ -106,25 +159,59 @@
                                 Mark</th>
                             <th
                                 class="bg-sky-50 sticky top-0 border-b border-gray-200 px-6 py-3 text-sky-600 font-bold tracking-wider uppercase text-xs">
+                                Status</th>
+                            <th
+                                class="bg-sky-50 sticky top-0 border-b border-gray-200 px-6 py-3 text-sky-600 font-bold tracking-wider uppercase text-xs">
                                 Action</th>
                         </tr>
                     </thead>
+                    <div class="flex justify-between mb-4 md:mb-0">
+                        <div class="flex space-x-2">
+                            @if ($schedule->status == 'Upcoming')
+                                <button
+                                    class="border border-blue-600 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition duration-300"
+                                    onclick="markSelected()">Mark</button>
+                                <button
+                                    class="border border-gray-600 text-gray-600 px-4 py-2 rounded-lg hover:bg-gray-600 hover:text-white transition duration-300"
+                                    onclick="unmarkSelected()">Unmark</button>
+                                <button
+                                    class="border border-green-600 text-green-600 px-4 py-2 rounded-lg hover:bg-green-600 hover:text-white transition duration-300"
+                                    onclick="approveSelected()">Approve</button>
+                                <button
+                                    class="border border-red-600 text-red-600 px-4 py-2 rounded-lg hover:bg-red-600 hover:text-white transition duration-300"
+                                    onclick="rejectSelected()">Reject</button>
+                            @endif
+                        </div>
+                        @if ($schedule->status == 'Draft')
+                            <button
+                                class="border border-indigo-700 text-indigo-700 font-bold py-2 px-3 rounded-lg hover:bg-indigo-700 hover:text-white transition duration-300"
+                                onclick="toggleModal(true)">
+                                Generate
+                            </button>
+                        @endif
+                    </div>
                     <tbody id="users-table-body">
                         @forelse ($schedule->line as $line)
                             <tr class="hover:bg-sky-100">
-                                <td class="border-b border-gray-200 px-6 py-4">{{ $line->application->user->name }}</td>
+                                <td class="border-b border-gray-200 px-6 py-4"><input type="checkbox"
+                                        class="application-checkbox" value="{{ $line->id }}"
+                                        style="transform: scale(1.3);"></td>
+                                <td class="border-b border-gray-200 px-6 py-4">{{ $line->application->user->name }}
+                                </td>
                                 <td class="border-b border-gray-200 px-6 py-4">{{ $line->application->reg_no }}</td>
                                 <td class="border-b border-gray-200 px-6 py-4">
-                                    <input type="checkbox" {{ $line->is_mark ? 'checked' : '' }} style="transform: scale(1.3);" onclick="return false">
+                                    <input type="checkbox" {{ $line->is_mark ? 'checked' : '' }}
+                                        style="transform: scale(1.3);" onclick="return false">
                                 </td>
+                                <td class="border-b border-gray-200 px-6 py-4">{{ $line->result }}</td>
                                 <td class="border-b border-gray-200 px-6 py-4">
                                     <div class="flex flex-row items-center gap-x-3">
-                                        <form action="{{ route('schedule.line.destroy',$line) }}" method="POST">
+                                        @if ( $schedule->status != 'Done' && $schedule->status != 'Upcoming')
+                                        <form action="{{ route('schedule.line.destroy', $line) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
-                                                class="p-2 text-red-700 border border-red-700 rounded-full hover:bg-red-100 delete-button"
-                                                >
+                                                class="p-2 text-red-700 border border-red-700 rounded-full hover:bg-red-100 delete-button">
                                                 <!-- SVG Trash Icon -->
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
@@ -134,6 +221,7 @@
                                                 </svg>
                                             </button>
                                         </form>
+                                        @endif
 
                                         <a href="{{ route('application.show', $line->application->id) }}"
                                             class="font-bold py-2 px-4 bg-indigo-700 hover:bg-indigo-400 text-white rounded-lg">Detail
@@ -143,7 +231,8 @@
                             <tr>
                             @empty
                             <tr>
-                                <td colspan="4" class="text-center border-b border-gray-200 px-6 py-4">No data found
+                                <td colspan="6" class="text-center border-b border-gray-200 px-6 py-4">No data
+                                    found
                                 </td>
                             </tr>
                         @endforelse
@@ -202,6 +291,57 @@
         </div>
     </div>
     <script>
+        function confirmSetDraft(event) {
+            event.preventDefault(); // Prevent the default link action
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "If you press 'Cancel', the schedule will be canceled and a cancellation email will be sent to the applicant.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, set as cancelled',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "{{ route('schedule.set.cancelled', $schedule) }}";
+                }
+            });
+        }
+        
+        function confirmSendInvitation() {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "If you press 'Cancel', the schedule will be canceled, and a cancellation email will be sent to the applicant.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, send invitation',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('send-invitation-form').submit();
+            }
+        });
+    }
+        function toggleCheckboxes(source) {
+            checkboxes = document.querySelectorAll('input[type="checkbox"].application-checkbox');
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = source.checked;
+            }
+        }
+
+        function showNoSelectionAlert() {
+            Swal.fire({
+                title: 'No Application Selected',
+                text: 'Choose at least one application to perform this action.',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
+        }
+
         function toggleModal(show) {
             const modal = document.getElementById('generateModal');
             modal.classList.toggle('hidden', !show);
@@ -210,6 +350,66 @@
         function toggleSelectAll(source) {
             const checkboxes = document.querySelectorAll('.applicant-checkbox');
             checkboxes.forEach(checkbox => checkbox.checked = source.checked);
+        }
+
+        function markSelected() {
+            var selected = [];
+            document.querySelectorAll('input[type="checkbox"].application-checkbox:checked').forEach(function(checkbox) {
+                selected.push(checkbox.value);
+            });
+
+            if (selected.length > 0) {
+                var url = "{{ route('schedule.line.mark', ['ids' => ':ids']) }}";
+                url = url.replace(':ids', selected.join(','));
+                window.location.href = url;
+            } else {
+                showNoSelectionAlert(); // Call the reusable function
+            }
+        }
+
+        function unmarkSelected() {
+            var selected = [];
+            document.querySelectorAll('input[type="checkbox"].application-checkbox:checked').forEach(function(checkbox) {
+                selected.push(checkbox.value);
+            });
+
+            if (selected.length > 0) {
+                var url = "{{ route('schedule.line.unmark', ['ids' => ':ids']) }}";
+                url = url.replace(':ids', selected.join(','));
+                window.location.href = url;
+            } else {
+                showNoSelectionAlert(); // Call the reusable function
+            }
+        }
+
+        function approveSelected() {
+            var selected = [];
+            document.querySelectorAll('input[type="checkbox"].application-checkbox:checked').forEach(function(checkbox) {
+                selected.push(checkbox.value);
+            });
+
+            if (selected.length > 0) {
+                var url = "{{ route('schedule.line.approve', ['ids' => ':ids']) }}";
+                url = url.replace(':ids', selected.join(','));
+                window.location.href = url;
+            } else {
+                showNoSelectionAlert(); // Call the reusable function
+            }
+        }
+
+        function rejectSelected() {
+            var selected = [];
+            document.querySelectorAll('input[type="checkbox"].application-checkbox:checked').forEach(function(checkbox) {
+                selected.push(checkbox.value);
+            });
+
+            if (selected.length > 0) {
+                var url = "{{ route('schedule.line.reject', ['ids' => ':ids']) }}";
+                url = url.replace(':ids', selected.join(','));
+                window.location.href = url;
+            } else {
+                showNoSelectionAlert(); // Call the reusable function
+            }
         }
 
         function generateSelected() {

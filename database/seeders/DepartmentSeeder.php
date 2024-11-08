@@ -3,8 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\Department;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DepartmentSeeder extends Seeder
 {
@@ -13,9 +14,19 @@ class DepartmentSeeder extends Seeder
      */
     public function run(): void
     {
-        $department = Department::create([
-            'code' => 'IT',
-            'name' => 'Informatics'
-        ]);
+        $departments = [
+            ['code' => 'HR', 'name' => 'Human Resources'],
+            ['code' => 'IT', 'name' => 'Information Technology'],
+            ['code' => 'MKT', 'name' => 'Marketing'],
+            ['code' => 'SLS', 'name' => 'Sales'],
+            ['code' => 'FIN', 'name' => 'Finance'],
+            ['code' => 'OPS', 'name' => 'Operations'],
+            ['code' => 'CS', 'name' => 'Customer Service'],
+            ['code' => 'RD', 'name' => 'Research and Development'],
+        ];
+
+        foreach ($departments as $department) {
+            Department::create($department);
+        }
     }
 }

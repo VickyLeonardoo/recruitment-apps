@@ -26,6 +26,7 @@ return new class extends Migration
             $table->float('max_salary');
             $table->enum('status', ['Active', 'Draft', 'Cancelled', 'Done'])->default('Draft');
             $table->boolean('is_archive')->default(false);
+            $table->integer('max_pax');
             $table->timestamps();
         });
     }

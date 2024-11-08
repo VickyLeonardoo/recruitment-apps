@@ -33,6 +33,7 @@ class JobUpdateRequest extends FormRequest
             'end_date' => 'required',
             'min_salary' => 'required','numeric',
             'max_salary' => 'required','numeric',
+            'max_pax' => 'required','numeric'
         ];
     }
 }

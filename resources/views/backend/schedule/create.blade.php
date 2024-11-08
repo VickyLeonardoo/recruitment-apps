@@ -26,10 +26,12 @@
                     <div class="mt-4">
                         <x-input-label for="job_vacancy_id" :value="__('Job')" />
                         <select name="job_vacancy_id" id="job_vacancy_id" class="rounded-lg pl-3 w-full border border-slate-300">
-                            <option value="" disabled selected>Choose Job</option>
-                            @foreach ($jobs as $job)
+                            <option value="" disabled selected>-- Choose Job --</option>
+                            @forelse ($jobs as $job)
                                 <option value="{{ $job->id }}" {{ old('job_vacancy_id') == $job->id  ? 'selected':''}}>{{ $job->code }}</option>
-                            @endforeach
+                            @empty
+                                <option value="" disabled>No Data Found</option>                                
+                            @endforelse
                         </select>
 
                         <x-input-error :messages="$errors->get('job_vacancy_id')" class="mt-2" />

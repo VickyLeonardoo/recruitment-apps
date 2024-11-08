@@ -29,16 +29,17 @@
                 <div class="flex flex-col md:flex-row justify-between items-center mb-6">
                     <!-- Left side buttons -->
                     <div class="flex space-x-2 mb-4 md:mb-0">
+                        @if ($job->status != 'Done')
+                            
                         <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-300 transition duration-300" onclick="markSelected()">Mark</button>
                         <button class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-300 transition duration-300" onclick="unmarkSelected()">Unmark</button>
                         <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-300 transition duration-300" onclick="interviewSelected()">Interview</button>
+                        @endif
                         <button class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-300 transition duration-300" onclick="rejectSelected()">Reject</button>
-                        
-
                     </div>
             
                     <!-- Right side search form -->
-                    <form method="GET" action="{{ route('application.index') }}" class="flex w-full md:w-auto">
+                    <form method="GET" action="{{ route('application.index',$job) }}" class="flex w-full md:w-auto">
                         <input type="text" autocomplete="off" name="search" placeholder="Search application"
                             class="rounded-l-full w-full md:w-64 border-gray-300 focus:border-red-300 focus:ring focus:ring-red-200 focus:ring-opacity-50"
                             value="{{ request('search') }}">
@@ -103,7 +104,7 @@
                                 <tr>
                         @empty
                         <tr>
-                            <td colspan="4" class="text-center border-b border-gray-200 px-6 py-4">No data found</td>
+                            <td colspan="8" class="text-center border-b border-gray-200 px-6 py-4">No data found</td>
                         </tr>
                         @endforelse
                     </tbody>

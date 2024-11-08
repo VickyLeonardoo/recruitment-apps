@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             DepartmentSeeder::class,
             QuestionSeeder::class,
             ChoiceSeeder::class,
+            PositionSeeder::class,
+            JobVacancySeeder::class,
         ]);
     }
 }
