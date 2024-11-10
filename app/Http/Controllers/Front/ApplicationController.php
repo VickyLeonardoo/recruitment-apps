@@ -15,11 +15,20 @@ class ApplicationController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // public function index()
+    // {
+    //     $user_id = auth()->user()->id;
+    //     $apps = Application::where('user_id', $user_id)->get();
+    //     return view('frontend.application.index',[
+    //         'apps' => $apps
+    //     ]);
+    // }
+
     public function index()
     {
         $user_id = auth()->user()->id;
-        $apps = Application::where('user_id', $user_id)->get();
-        return view('frontend.application.index',[
+        $apps = Application::where('user_id', $user_id)->paginate();
+        return view('front.application.index',[
             'apps' => $apps
         ]);
     }

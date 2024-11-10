@@ -15,25 +15,25 @@ class JobVacancyController extends Controller
      */
     public function index(Request $request)
     {
-        $jobs = JobVacancy::with('position')->with('application'); // Load posisi dari awal
+        $jobs = JobVacancy::with('position', 'application'); // Eager load relationships
 
         if ($request->has('search')) {
             $query = $request->search;
 
-            // Tambahkan pencarian pada kolom 'code', 'date', 'status', dan relasi 'position'
+            // Add search on 'code', 'start_date', 'end_date', 'status', and 'position' relationship
             $jobs = $jobs->where(function ($q) use ($query) {
                 $q->where('code', 'like', "%{$query}%")
                 ->orWhere('start_date', 'like', "%{$query}%")
                 ->orWhere('end_date', 'like', "%{$query}%")
                 ->orWhere('status', 'like', "%{$query}%")
                 ->orWhereHas('position', function ($q) use ($query) {
-                    $q->where('name', 'like', "%{$query}%"); // Gunakan like untuk pencarian yang case sensitive
+                    $q->where('name', 'like', "%{$query}%");
                 });
             });
         }
 
-        // Pagination 10 item per halaman
-        $jobs = $jobs->paginate(10);
+        // Order by created_at or another date column, descending to get the latest first
+        $jobs = $jobs->orderBy('id', 'desc')->paginate(10);
 
         return view('backend.job.index', [
             'jobs' => $jobs,

@@ -30,7 +30,7 @@ class AuthenticatedSessionController extends Controller
 
         if (auth()->user()->hasRole('applicant')) {
             // Redirect ke halaman profil applicant
-            return redirect()->intended(route('applicant.profile.index'));
+            return redirect()->intended(route('applicant.job.index'));
         }
         
         return redirect()->intended(route('dashboard', absolute: false));

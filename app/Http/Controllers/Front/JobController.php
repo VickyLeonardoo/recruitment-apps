@@ -13,14 +13,20 @@ class JobController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
-
-        return view('frontend.job.index', [
+        return view('front.job.index', [
             'jobs' => JobVacancy::where('status', 'active')
                     ->where('end_date', '>', Carbon::now())
-                    ->get(),
-    ]);
+                    ->paginate(5),
+        ]);
+
+        // return view('frontend.job.index', [
+        //     'jobs' => JobVacancy::where('status', 'active')
+        //             ->where('end_date', '>', Carbon::now())
+        //             ->get(),
+        // ]);
     }
 
     /**
@@ -42,7 +48,8 @@ class JobController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(JobVacancy $job)
+
+     public function show(JobVacancy $job)
     {
         $application = false;
         $check = Application::where('user_id',auth()->user()->id)->where('job_vacancy_id',$job->id)->first();
@@ -50,8 +57,19 @@ class JobController extends Controller
             $application = $check;
         }
 
-        return view('frontend.job.detail',compact('job','application'));
+        return view('front.job.show',compact('job','application'));
     }
+
+    // public function show(JobVacancy $job)
+    // {
+    //     $application = false;
+    //     $check = Application::where('user_id',auth()->user()->id)->where('job_vacancy_id',$job->id)->first();
+    //     if($check){
+    //         $application = $check;
+    //     }
+
+    //     return view('frontend.job.detail',compact('job','application'));
+    // }
 
     /**
      * Show the form for editing the specified resource.

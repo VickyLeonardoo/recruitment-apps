@@ -11,10 +11,12 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\JobVacancyController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ScheduleLineController;
+use App\Http\Controllers\Front\JobController;
 
 Route::get('/', function () {
     return view('welcome');
 }); 
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

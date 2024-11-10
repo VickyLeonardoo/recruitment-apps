@@ -16,9 +16,14 @@
         
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-sky-50">
+        <div class="min-h-screen bg-sky-200">
+            @role(['superadmin', 'manager', 'admin', 'hr'])
             @include('layouts.navigation')
-
+            @endrole
+            
+            @role('applicant')
+            @include('layouts.front-navigation')
+            @endrole
             <!-- Page Heading -->
             @isset($header)
                 <header class="bg-white shadow">

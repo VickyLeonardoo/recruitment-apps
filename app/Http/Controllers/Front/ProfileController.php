@@ -23,9 +23,14 @@ class ProfileController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // public function index()
+    // {
+    //     return view('frontend.profile.index');
+    // }
+
     public function index()
     {
-        return view('frontend.profile.index');
+        return view('front.profile.my-info');
     }
 
     /**
