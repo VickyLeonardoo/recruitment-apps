@@ -46,7 +46,16 @@ class RolePermissionSeeder extends Seeder
             'name' => 'Ordep',
             'email' => 'user@example.com',
             'password' => bcrypt('123'),
+            'identity_no' => '2171878887899002',
             'email_verified_at' => '2021-01-01 00:00:00',
+            'address' => 'Bengkong Telaga Indah',
+            'city' => 'Batam',
+            'dob' => '2002-07-07',
+            'phone' => '081278668899',
+            'gender' => 'male',
+            'status' => 'Single',
+            'nationality' => 'Indonesia',
+            'religion' => 'Islam',
         ]);
 
         $userSuperAdmin->assignRole($superAdminRole);

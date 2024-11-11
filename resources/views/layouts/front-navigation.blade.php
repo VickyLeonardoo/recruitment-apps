@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-sky-200 border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-sky-100 border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -17,9 +17,11 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('applicant.profile.index')" :active="request()->routeIs('applicant.profile*')">
-                        {{ __('Informasi Pribadi') }}
-                    </x-nav-link>
+                    @auth
+                        <x-nav-link :href="route('applicant.profile.index')" :active="request()->routeIs('applicant.profile*')">
+                            {{ __('Informasi Pribadi') }}
+                        </x-nav-link>
+                    @endauth
                     <x-nav-link :href="route('applicant.job.index')" :active="request()->routeIs('applicant.job*')">
                         {{ __('Pekerjaan') }}
                     </x-nav-link>

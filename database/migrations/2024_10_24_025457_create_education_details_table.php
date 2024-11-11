@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('education_details', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('degree');
+            $table->string('institution');
             $table->string('major');
-            $table->string('university');
+            $table->string('degree');
             $table->integer('entry_year');
             $table->integer('end_year');
             $table->decimal('grade');

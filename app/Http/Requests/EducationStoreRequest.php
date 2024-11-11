@@ -24,7 +24,7 @@ class EducationStoreRequest extends FormRequest
         return [
             'degree' => 'required','string',
             'major' => 'required','string',
-            'university' => 'required','string',
+            'institution' => 'required','string',
             'entry_year' => 'required','digits:4',
             'end_year' => 'required','digits:4',
             'grade' => 'required','numeric','regex:/^\d{1,3}(\.\d{1,2})?$/',

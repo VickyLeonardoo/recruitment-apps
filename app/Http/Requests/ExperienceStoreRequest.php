@@ -24,8 +24,7 @@ class ExperienceStoreRequest extends FormRequest
         return [
             'company' => 'required',
             'position' => 'required',
-            'start_date' => 'required',
-            'end_date' => 'required',
+            'period' => 'required',
         ];
     }
 }

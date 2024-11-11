@@ -10,24 +10,46 @@ use Illuminate\Http\Request;
 
 class JobController extends Controller
 {
-    /**
+    /** 
      * Display a listing of the resource.
      */
 
-    public function index()
+     public function index(Request $request)
     {
-        return view('front.job.index', [
-            'jobs' => JobVacancy::where('status', 'active')
-                    ->where('end_date', '>', Carbon::now())
-                    ->paginate(5),
-        ]);
+        $jobs = JobVacancy::where('status', 'active')
+                    ->where('end_date', '>', Carbon::now()); // Filter active status and end date
 
-        // return view('frontend.job.index', [
-        //     'jobs' => JobVacancy::where('status', 'active')
-        //             ->where('end_date', '>', Carbon::now())
-        //             ->get(),
-        // ]);
+        if ($request->has('search')) {
+            $query = $request->search;
+
+            // Add search on 'code', 'start_date', 'end_date', 'status', and 'position' relationship
+            $jobs = $jobs->where(function ($q) use ($query) {
+                $q->where('code', 'like', "%{$query}%")
+                ->orWhere('start_date', 'like', "%{$query}%")
+                ->orWhere('end_date', 'like', "%{$query}%")
+                ->orWhereHas('position', function ($q) use ($query) {
+                    $q->where('name', 'like', "%{$query}%");
+                });
+            });
+        }
+
+        // Order by created_at or another date column, descending to get the latest first
+        $jobs = $jobs->orderBy('id', 'desc')->paginate(9);
+
+        return view('front.job.index', [
+            'jobs' => $jobs,
+        ]);
     }
+
+
+    // public function index()
+    // {
+    //     return view('frontend.job.index', [
+    //         'jobs' => JobVacancy::where('status', 'active')
+    //                 ->where('end_date', '>', Carbon::now())
+    //                 ->get(),
+    //     ]);
+    // }
 
     /**
      * Show the form for creating a new resource.

@@ -20,7 +20,36 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->middleware('role:applicant');
 
     Route::resource('profile',ProfileController::class)
-    ->middleware('role:applicant');
+        ->middleware('role:applicant');
+
+    Route::post('/profile/education/store', [ProfileController::class, 'store_education'])
+        ->middleware('role:applicant')
+        ->name('profile.education.store');
+
+    Route::post('/profile/skill/store', [ProfileController::class, 'store_skill'])
+        ->middleware('role:applicant')
+        ->name('profile.skill.store');
+
+    Route::delete('/profile/skill/destroy/{skill:id}', [ProfileController::class, 'destroy_skill'])
+        ->middleware('role:applicant')
+        ->name('profile.skill.destroy');
+
+    Route::post('/profile/experience/store', [ProfileController::class, 'store_experience'])
+        ->middleware('role:applicant')
+        ->name('profile.experience.store');
+
+    Route::delete('/profile/experience/destroy/{experience:id}', [ProfileController::class, 'destroy_experience'])
+        ->middleware('role:applicant')
+        ->name('profile.experience.destroy');
+
+    Route::put('/profile/update/photo', [ProfileController::class, 'updatePhoto'])
+        ->middleware('role:applicant')
+        ->name('profile.photo.update');
+    
+    Route::put('/profile/update/personal-information', [ProfileController::class, 'update_personal_information'])
+        ->middleware('role:applicant')
+        ->name('profile.update.personal.information');
+
 
     Route::resource('application',ApplicationController::class)
     ->middleware('role:applicant');

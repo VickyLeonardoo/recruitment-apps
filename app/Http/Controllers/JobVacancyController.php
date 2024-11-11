@@ -16,7 +16,7 @@ class JobVacancyController extends Controller
     public function index(Request $request)
     {
         $jobs = JobVacancy::with('position', 'application'); // Eager load relationships
-
+ 
         if ($request->has('search')) {
             $query = $request->search;
 

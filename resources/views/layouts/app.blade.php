@@ -16,7 +16,7 @@
         
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-sky-200">
+        <div class="min-h-screen bg-sky-100">
             @role(['superadmin', 'manager', 'admin', 'hr'])
             @include('layouts.navigation')
             @endrole
