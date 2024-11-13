@@ -27,7 +27,7 @@ class JobStoreRequest extends FormRequest
             'description' => 'required',
             'position_id' => 'required',
             'requirements' => 'required',
-            'qualification' => 'required',
+            'responsibilities' => 'required',
             'type' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',

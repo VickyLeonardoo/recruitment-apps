@@ -25,11 +25,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/profile/education/store', [ProfileController::class, 'store_education'])
         ->middleware('role:applicant')
         ->name('profile.education.store');
+    
+    Route::delete('/profile/education/destroy/{education:id}', [ProfileController::class, 'destroy_education'])
+        ->middleware('role:applicant')
+        ->name('profile.education.destroy');
 
     Route::post('/profile/skill/store', [ProfileController::class, 'store_skill'])
         ->middleware('role:applicant')
         ->name('profile.skill.store');
-
+ 
     Route::delete('/profile/skill/destroy/{skill:id}', [ProfileController::class, 'destroy_skill'])
         ->middleware('role:applicant')
         ->name('profile.skill.destroy');
@@ -50,9 +54,25 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->middleware('role:applicant')
         ->name('profile.update.personal.information');
 
+    Route::post('/application/test/open/{application:id}', [TestController::class, 'startTest'])
+        ->middleware('role:applicant')
+        ->name('application.test.open');
 
+    Route::get('/application/test/index/{application:id}', [TestController::class, 'continueTest'])
+        ->middleware('role:applicant')
+        ->name('application.test.index');
+
+
+    Route::post('/application/test/save-answer', [TestController::class, 'saveAnswer'])
+        ->middleware('role:applicant')
+        ->name('application.test.saveAnswer');
+
+    Route::post('/application/test/save-answer/{id}', [TestController::class, 'submitApplication'])
+            ->middleware('role:applicant')
+            ->name('application.submit');
+            
     Route::resource('application',ApplicationController::class)
-    ->middleware('role:applicant');
+        ->middleware('role:applicant');
 
     // Rute untuk melamar pekerjaan yang hanya bisa diakses setelah login
     // Route::resource('job', JobController::class)
@@ -142,21 +162,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Route::resource('job',JobController::class)
     // ->middleware('role:applicant');
 
-    // Route::post('/application/test/open/{application:id}', [TestController::class, 'startTest'])
-    //     ->middleware('role:applicant')
-    //     ->name('application.test.open');
+    
 
-    // Route::get('/application/test/index/{application:id}', [TestController::class, 'continueTest'])
-    //     ->middleware('role:applicant')
-    //     ->name('application.test.index');
+    
 
-    // Route::post('/application/test/save-answer', [TestController::class, 'saveAnswer'])
-    //     ->middleware('role:applicant')
-    //     ->name('application.test.saveAnswer');
-
-    // Route::post('/application/test/save-answer/{id}', [TestController::class, 'submitApplication'])
-    //         ->middleware('role:applicant')
-    //         ->name('application.submit');
+    
 
     // Route::resource('application',ApplicationController::class)
     // ->middleware('role:applicant');

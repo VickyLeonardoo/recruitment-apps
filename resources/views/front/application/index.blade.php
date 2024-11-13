@@ -211,7 +211,7 @@
                         </div>
                     </div> --}}
                     
-                    <div class="p-6 hover:bg-gray-50 transition duration-150">
+                    {{-- <div class="p-6 hover:bg-gray-50 transition duration-150">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center space-x-6">
                                 <div class="w-16 h-16 bg-purple-100 rounded-xl flex items-center justify-center">
@@ -294,7 +294,8 @@
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
+                    @foreach ($applications as $application)
                     <div class="p-6 hover:bg-gray-50 transition duration-150">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center space-x-6">
@@ -306,29 +307,32 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <h3 class="text-xl font-semibold text-gray-800">UI/UX Designer</h3>
+                                    <h3 class="text-xl font-semibold text-gray-800">{{ $application->job->title }}</h3>
                                     <div class="flex items-center mt-2 space-x-4">
-                                        <span class="text-sm text-gray-500">Creative Digital Agency</span>
+                                        <span class="text-sm text-gray-500">{{ $application->job->code }}</span>
                                         <span class="text-sm text-gray-500">•</span>
-                                        <span class="text-sm text-gray-500">Remote</span>
+                                        <span class="text-sm text-gray-500">{{ $application->job->type }}</span>
                                         <span class="text-sm text-gray-500">•</span>
-                                        <span class="text-sm text-gray-500">Dilamar 1 minggu yang lalu</span>
+                                        <span class="text-sm text-gray-500"><span class="text-sm text-gray-500">{{ \Carbon\Carbon::parse($application->created_at)->diffForHumans() }}</span>
+                                    </span>
                                     </div>
                                 </div>
                             </div>
                             <div class="flex items-center space-x-4">
                                 <span
-                                    class="px-3 py-1 text-sm text-green-600 bg-green-100 rounded-full">Interview</span>
-                                <button class="text-gray-400 hover:text-gray-600">
+                                    class="px-3 py-1 text-sm text-green-600 bg-green-100 rounded-full">{{ $application->status }}</span>
+                                <a href="{{ route('applicant.application.show',$application) }}" class="text-gray-400 hover:text-gray-600">
                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z">
                                         </path>
                                     </svg>
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
+                    @endforeach
+                    
                 </div>
             </div>
 </x-app-layout>

@@ -34,7 +34,7 @@
                         <br><br>
                         <p>Kualifikasi</p>
                         <ul>
-                            {!! nl2br(e($job->qualification)) !!}
+                            {!! nl2br(e($job->responsibilities)) !!}
                             
                         </ul>
                         <br><br>

@@ -74,7 +74,7 @@ class TestController extends Controller
         // Pastikan start_time menggunakan timezone UTC
         $startTime = Carbon::parse($select->test->start_time)->format('Y-m-d\TH:i:s\Z');
 
-        return view('frontend.application.test', [
+        return view('front.application.test', [
             'tests' => $test,
             'start_time' => $startTime,
         ]);

@@ -31,7 +31,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('department',DepartmentController::class)
     ->middleware('role:superadmin');
-
+ 
     Route::get('/add/position/{department:id}', [PositionController::class, 'create'])
         ->middleware('role:superadmin')
         ->name('department.create.position');

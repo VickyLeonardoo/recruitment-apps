@@ -17,11 +17,11 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->foreignId('position_id')->constrained();
+            $table->text('responsibilities');
             $table->text('requirements');
-            $table->text('qualification');
             $table->string('type');
             $table->date('start_date');
-            $table->date('end_date');
+            $table->date('end_date'); 
             $table->float('min_salary');
             $table->float('max_salary');
             $table->enum('status', ['Active', 'Draft', 'Cancelled', 'Done'])->default('Draft');

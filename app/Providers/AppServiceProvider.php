@@ -27,5 +27,7 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('formatTime', function ($expression) {
             return "<?php echo ($expression) ? Carbon\Carbon::parse($expression)->format('H:i') : ''; ?>";
         });
+
+        Blade::directive('currency', function ( $expression ) { return "Rp. <?php echo number_format($expression,0,',','.'); ?>"; });
     }
 }

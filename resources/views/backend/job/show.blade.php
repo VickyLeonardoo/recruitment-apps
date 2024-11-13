@@ -85,8 +85,8 @@
                 </div>
             
                 <div class="mt-4">
-                    <x-input-label for="qualification" :value="__('Qualification*')" />
-                    <textarea id="qualification" name="qualification" class="block mt-1 w-full border-b-4 border-t-0 border-l-0 border-r-0 border-gray-400" rows="4" readonly>{{ $job->qualification }}</textarea>
+                    <x-input-label for="responsibilities" :value="__('Responsibilities*')" />
+                    <textarea id="responsibilities" name="responsibilities" class="block mt-1 w-full border-b-4 border-t-0 border-l-0 border-r-0 border-gray-400" rows="4" readonly>{{ $job->responsibilities }}</textarea>
                 </div>
             
                 <div class="mt-4 flex">

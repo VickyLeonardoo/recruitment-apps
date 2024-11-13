@@ -11,9 +11,11 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <!-- Scripts -->
+        <link rel="stylesheet" href="{{ asset('custom') }}/style.css">
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <script src="//unpkg.com/alpinejs" defer></script>
-        
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-sky-100">

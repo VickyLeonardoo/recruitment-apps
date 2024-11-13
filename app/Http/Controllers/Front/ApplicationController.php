@@ -29,7 +29,7 @@ class ApplicationController extends Controller
         $user_id = auth()->user()->id;
         $apps = Application::where('user_id', $user_id)->paginate();
         return view('front.application.index',[
-            'apps' => $apps
+            'applications' => $apps
         ]);
     }
 
@@ -47,7 +47,7 @@ class ApplicationController extends Controller
     public function store(Request $request)
     {
         $userId = auth()->user()->id;
-        $jobId = $request->job_id;
+        $jobId = $request->job_id; 
         
         $checkAppliation = Application::where('user_id',$userId)->latest()->first();
         if ($checkAppliation) {
@@ -90,9 +90,9 @@ class ApplicationController extends Controller
             // If we've gotten this far, it means both inserts were successful.
             // So, let's commit the transaction.
             DB::commit();
-            return 'sukses';
-            // return redirect()->route('applicant.application.detail', $application->id)
-            //                 ->with('success', 'Berhasil melakukan pendaftaran');
+            
+            return redirect()->route('applicant.application.show', $application)
+                            ->with('success', 'Berhasil melakukan pendaftaran');
         } catch (\Exception $e) {
             // Something went wrong, let's rollback the transaction
             DB::rollBack();
@@ -107,15 +107,26 @@ class ApplicationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Application $application)
+    
+     public function show(Application $application)
     {
         if (!$application){
             return view('errors/404');
         }
-        return view('frontend.application.detail',[
+        return view('front.application.show',[
             'application' => $application,
         ]);
     }
+
+    // public function show(Application $application)
+    // {
+    //     if (!$application){
+    //         return view('errors/404');
+    //     }
+    //     return view('frontend.application.detail',[
+    //         'application' => $application,
+    //     ]);
+    // }
 
     /**
      * Show the form for editing the specified resource.

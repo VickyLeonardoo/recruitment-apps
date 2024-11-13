@@ -81,7 +81,7 @@
                     <div><strong>Religion:</strong> {{ $application->user->religion }}</div>
                     <div class="col-span-2">
                         <strong>Profile Picture:</strong>
-                        <img src="profile_picture_url" class="w-20 h-20 rounded-full mt-2" alt="Profile Picture">
+                        <img src="{{ Storage::url($application->user->profile_picture) }}" class="w-20 h-20 rounded-full mt-2" alt="Profile Picture">
                     </div>
                 </div>
             </div>

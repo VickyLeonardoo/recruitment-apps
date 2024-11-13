@@ -71,9 +71,9 @@
                     </div>
 
                     <div class="mt-4">
-                        <x-input-label for="qualification" :value="__('Qualification*')" />
-                        <textarea id="qualification" name="qualification" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" rows="4" required>{{ $job->qualification }}</textarea>
-                        <x-input-error :messages="$errors->get('qualification')" class="mt-2" />
+                        <x-input-label for="responsibilities" :value="__('Responsibilities*')" />
+                        <textarea id="responsibilities" name="responsibilities" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" rows="4" required>{{ $job->responsibilities }}</textarea>
+                        <x-input-error :messages="$errors->get('responsibilities')" class="mt-2" />
                     </div>
 
                     <div class="mt-4 flex">

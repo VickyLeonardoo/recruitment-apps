@@ -49,8 +49,7 @@
                                             d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                     </svg>
                                 </div>
-                                <span class="px-3 py-1 text-sm text-green-600 bg-green-100 rounded-full">Full
-                                    Time</span>
+                                <span class="px-3 py-1 text-sm text-green-600 bg-green-100 rounded-full">{{ $job->type }}</span>
                             </div>
 
                             <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition">
@@ -67,7 +66,7 @@
                                             d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    </svg>
+                                    </svg> 
                                     Jakarta
                                 </span>
                                 <span class="flex items-center text-gray-500 text-sm">
@@ -76,12 +75,12 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
-                                    Full Time
+                                    {{ $job->type }}
                                 </span>
                             </div>
 
                             <div class="flex justify-between items-center pt-4 border-t border-gray-100">
-                                <span class="text-blue-600 font-bold">Rp. 10.000.000</span>
+                                <span class="text-blue-600 font-bold">@currency($job->max_salary)</span>
                                 <a href="{{ route('applicant.job.show', $job) }}"
                                     class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300 text-sm font-semibold">
                                     Selengkapnya

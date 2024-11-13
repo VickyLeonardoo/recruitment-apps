@@ -44,7 +44,7 @@ class RolePermissionSeeder extends Seeder
 
         $user = User::create([
             'name' => 'Ordep',
-            'email' => 'user@example.com',
+            'email' => 'user1@example.com',
             'password' => bcrypt('123'),
             'identity_no' => '2171878887899002',
             'email_verified_at' => '2021-01-01 00:00:00',

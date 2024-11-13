@@ -203,9 +203,9 @@ class ProfileController extends Controller
         //
     }
 
-    public function destroy_my_education(EducationDetail $education){
+    public function destroy_education(EducationDetail $education){
         $education->delete();
-        return redirect()->back()->with('success','Education has been deleted');
+        return redirect()->back()->with('success','Education has been deleted')->with(['tab' => 'Pendidikan']);
     }
 
     public function destroy_skill(Skill $skill){
