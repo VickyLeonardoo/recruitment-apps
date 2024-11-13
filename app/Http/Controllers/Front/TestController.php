@@ -50,7 +50,7 @@ class TestController extends Controller
             }
     
             DB::commit(); // Semua operasi berhasil, commit transaksi
-            return redirect()->back()->with('success', 'Tes dimulai!');
+            return redirect()->route('applicant.application.test.index',$application);
     
         } catch (\Exception $e) {
             DB::rollBack(); // Terjadi kesalahan, rollback semua perubahan

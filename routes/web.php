@@ -7,15 +7,18 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\Front\JobController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\JobVacancyController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ScheduleLineController;
-use App\Http\Controllers\Front\JobController;
 
 Route::get('/', function () {
     return view('welcome');
 }); 
+
+Route::get('/',[HomeController::class,'index'])->name('home');
 
 
 Route::get('/dashboard', function () {

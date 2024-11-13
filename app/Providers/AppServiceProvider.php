@@ -29,5 +29,9 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Blade::directive('currency', function ( $expression ) { return "Rp. <?php echo number_format($expression,0,',','.'); ?>"; });
+
+        Blade::directive('formatFullDate', function ($expression) {
+            return "<?php echo ($expression) ? \Carbon\Carbon::parse($expression)->translatedFormat('l, d F Y') : ''; ?>";
+        });
     }
 }

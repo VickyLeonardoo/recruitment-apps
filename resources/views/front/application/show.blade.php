@@ -38,14 +38,16 @@
                     <!-- Online Test Section -->
                     <div class="mt-8">
                         <h2 class="text-xl font-semibold text-gray-800 mb-4">Psikotes Online</h2>
-                        <div class="bg-blue-50 rounded-lg p-4 mb-4">
-                            <p class="text-sm text-blue-700">
-                                Untuk dapat melanjutkan proses lamaran kerja ini, silahkan mengerjakan test assessment yang ber-status
-                                OPEN atau INPROGRESS dibawah ini sampai dengan Job Application 
-                                <span class="px-2 py-0.5 bg-green-100 text-green-600 rounded">{{ $application->reg_no }}</span>
-                                berstatus <span class="px-2 py-0.5 bg-blue-100 text-blue-600 rounded">COMPLETED</span>
-                            </p>
-                        </div>
+                        @if ($application->status != 'Rejected')
+                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                <p class="text-sm text-blue-700">
+                                    Untuk dapat melanjutkan proses lamaran kerja ini, silahkan mengerjakan test assessment yang ber-status
+                                    OPEN atau INPROGRESS dibawah ini sampai dengan Job Application 
+                                    <span class="px-2 py-0.5 bg-green-100 text-green-600 rounded">{{ $application->reg_no }}</span>
+                                    berstatus <span class="px-2 py-0.5 bg-blue-100 text-blue-600 rounded">COMPLETED</span>
+                                </p>
+                            </div>
+                        @endif
 
                         <!-- Test Table -->
                         <div class="overflow-x-auto">
@@ -143,7 +145,7 @@
                                 <tbody class="bg-white divide-y divide-gray-200">
                                     @if ($application->schedule)
                                         <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap">@onlyDate($application->schedule->schedule->date)</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">@formatDate($application->schedule->schedule->date)</td>
                                             <td class="px-6 py-4">Jl. Bawal No.1, Batu Merah, Kec. Batu Ampar, Kota Batam, Kepulauan Riau 29452</td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 @formatTime($application->schedule->schedule->start_time) - @formatTime($application->schedule->schedule->end_time)

@@ -24,12 +24,25 @@ class ApplicationController extends Controller
     //     ]);
     // }
 
-    public function index()
+    public function index(Request $request)
     {
         $user_id = auth()->user()->id;
-        $apps = Application::where('user_id', $user_id)->paginate();
-        return view('front.application.index',[
-            'applications' => $apps
+        $sort = $request->query('sort', 'newest'); // Default ke 'newest' jika tidak ada parameter
+    
+        $query = Application::where('user_id', $user_id);
+    
+        // Tentukan urutan berdasarkan pilihan
+        if ($sort === 'newest') {
+            $query->orderBy('created_at', 'desc');
+        } elseif ($sort === 'oldest') {
+            $query->orderBy('created_at', 'asc');
+        }
+    
+        $apps = $query->paginate();
+    
+        return view('front.application.index', [
+            'applications' => $apps,
+            'selectedSort' => $sort, // Mengirim pilihan urutan ke view
         ]);
     }
 
@@ -53,12 +66,16 @@ class ApplicationController extends Controller
         if ($checkAppliation) {
             if (in_array($checkAppliation->status, ['Pending'])) {
                 return back()->with('error', 'Gagal! Anda hanya dapat melakukan pendaftaran sekali dalam satu waktu');
-            }
+            } 
         }
         $alreadyApply = Application::where('job_vacancy_id', $jobId)->where('user_id' ,$userId)->first();
         if ($alreadyApply) {
             return back()->with('error', 'Gagal! Anda hanya dapat melakukan pendaftaran sekali dalam satu waktu');
         }
+        if (auth()->user()->education_details->count() == 0) {
+            return back()->with('error', 'Gagal! Anda harus mengisi data pendidikan terlebih dahulu');
+        }
+
 
         try {
             // Start the transaction
