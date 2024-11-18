@@ -26,7 +26,7 @@
       "abusaidm.html-snippets"
       "xabikos.JavaScriptSnippets"
       "amirmarmul.laravel-blade-vscode"
-      "amirmarmul.laravel-blade-vscode"
+      "amirmarmul.laravel-blade-vscode" 
       "shufo.vscode-blade-formatter"
       "onecentlin.laravel-blade"
       "amiralizadeh9480.laravel-extra-intellisense"
@@ -42,6 +42,7 @@
       "bmewburn.vscode-intelephense-client"
       "MehediDracula.php-namespace-resolver"
       "wongjn.php-sniffer"
+      "Hermitter.oh-lucy-vscode"
     ];
     workspace = {
       # Runs when a workspace is first created with this `dev.nix` file

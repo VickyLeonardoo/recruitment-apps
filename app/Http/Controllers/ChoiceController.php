@@ -58,6 +58,7 @@ class ChoiceController extends Controller
 
         // Simpan data choice
         $choice = Choice::create($data);
+        
 
         // Redirect ke halaman pertanyaan dengan pesan sukses
         return redirect()->route('question.show', $question)->with('success', 'Choice has been created');

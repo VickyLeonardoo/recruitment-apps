@@ -71,10 +71,10 @@
                         </x-dropdown>
                     @else
                         <a href="{{ route('login') }}"
-                            class="bg-blue-100 text-blue-600 px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-200 transition-colors duration-300">Masuk</a>
+                            class="bg-blue-200 text-blue-600 px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-400 transition-colors duration-300">Masuk</a>
 
                         <a href="{{ route('register') }}"
-                            class="bg-orange-100 text-orange-600 px-4 py-2 rounded-md text-sm font-semibold hover:bg-orange-200 transition-colors duration-300">Daftar</a>
+                            class="bg-orange-200 text-orange-600 px-4 py-2 rounded-md text-sm font-semibold hover:bg-orange-400 transition-colors duration-300">Daftar</a>
                     @endauth
                 </div>
             </div>

@@ -11,7 +11,7 @@
             @endrole
         </div>
 
-    </x-slot>
+    </x-slot> 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @if (session('success'))
@@ -25,6 +25,25 @@
                     </button>
                 </div>
             @endif
+            <div class="flex justify-end space-x-4 mb-3">
+                <!-- Sort By Dropdown -->
+                <select id="sortSelect"
+                    class="rounded-lg border-gray-300 text-gray-700 text-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="" disabled selected>Sort By</option>
+                    <option value="newest">Newest</option>
+                    <option value="oldest">Oldest</option>
+                </select>
+        
+                <!-- Show Dropdown -->
+                <select id="filterSelect"
+                    class="rounded-lg border-gray-300 text-gray-700 text-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="" disabled selected>Show</option>
+                    <option value="today">Today</option>
+                    <option value="this_week">This Week</option>
+                    <option value="this_month">This Month</option>
+                </select>
+            </div>
+        
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-10 flex flex-col gap-y-5">
                 <div class="flex flex-col md:flex-row justify-between items-center mb-6">
                     <!-- Left side buttons -->

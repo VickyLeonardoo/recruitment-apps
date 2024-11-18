@@ -117,15 +117,6 @@ class ApplicationController extends Controller
             'question_count_medium' => $question_count_medium,
             'question_count_hard' => $question_count_hard,
         ]);
-        // return view('backend.application.show', compact(
-        //     'application',
-        //     'finalGrade',
-        //     'question_count_easy',
-        //     'question_count_medium',
-        //     'question_count_hard'
-        // ));
-
-
     }
 
     /**

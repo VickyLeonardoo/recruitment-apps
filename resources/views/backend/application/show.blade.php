@@ -38,7 +38,7 @@
                     <p class="text-4xl font-bold">{{ $finalGrade }}</p>
                 </div>
                 <div class="bg-white shadow-sm sm:rounded-lg p-6">
-                    <h3 class="text-lg font-semibold mb-2">Question Difficulty Distribution</h3>
+                    <h3 class="text-lg font-semibold mb-2">Question Difficulty Distribution</h3> 
                     <div id="chart"></div> <!-- Placeholder for chart -->
                 </div>
             </div>
