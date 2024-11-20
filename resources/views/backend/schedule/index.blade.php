@@ -4,7 +4,7 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Schedule List') }}
             </h2>
-            @role('superadmin')
+            @role('superadmin|admin|hr')
                 <a href="{{ route('schedule.create') }}" class="font-bold py-2 px-4 bg-indigo-700 hover:bg-indigo-400 text-white rounded-full">
                     Add New
                 </a>
@@ -76,7 +76,7 @@
                             <tr>
                         @empty
                         <tr>
-                            <td colspan="4" class="text-center border-b border-gray-200 px-6 py-4">No data found</td>
+                            <td colspan="5" class="text-center border-b border-gray-200 px-6 py-4">No data found</td>
                         </tr>
                         @endforelse
                     </tbody>

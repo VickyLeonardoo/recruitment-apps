@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-sky-200 border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-sky-100 border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -7,15 +7,24 @@
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}" class="flex items-center space-x-2">
                         <img src="https://www.svgrepo.com/show/324381/search-career-work-job-recruitment-employee-2.svg" alt="Recruitment Logo" class="h-8 w-8">
-                        <span class="text-xl font-bold text-blue-400">Recruitment Xyz</span>
+                        <span class="text-xl font-bold text-black">Recruitment Xyz</span>
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    @role('superadmin|manager|admin|hr')
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('job.index')" :active="request()->routeIs('job*')">
+                        {{ __('Job Posting') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('schedule.index')" :active="request()->routeIs('schedule*')">
+                        {{ __('Schedule Interview') }}
+                    </x-nav-link>
+                    @endrole
+                    @role('superadmin|admin')
                     <x-nav-link :href="route('department.index')" :active="request()->routeIs('department*','position*')">
                         {{ __('Department') }}
                     </x-nav-link>
@@ -25,12 +34,8 @@
                     <x-nav-link :href="route('question.index')" :active="request()->routeIs('question*','choice*')">
                         {{ __('Question') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('job.index')" :active="request()->routeIs('job*')">
-                        {{ __('Job Posting') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('schedule.index')" :active="request()->routeIs('schedule*')">
-                        {{ __('Schedule Interview') }}
-                    </x-nav-link>
+                    @endrole
+                    
                 </div>
             </div>
 

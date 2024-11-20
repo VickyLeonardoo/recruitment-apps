@@ -47,15 +47,19 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-10 flex flex-col gap-y-5">
                 <div class="flex flex-col md:flex-row justify-between items-center mb-6">
                     <!-- Left side buttons -->
+                    @role('hr|admin')
                     <div class="flex space-x-2 mb-4 md:mb-0">
                         @if ($job->status != 'Done')
-                            
-                        <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-300 transition duration-300" onclick="markSelected()">Mark</button>
-                        <button class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-300 transition duration-300" onclick="unmarkSelected()">Unmark</button>
-                        <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-300 transition duration-300" onclick="interviewSelected()">Interview</button>
+                            <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-300 transition duration-300" onclick="markSelected()">Mark</button>
+                            <button class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-300 transition duration-300" onclick="unmarkSelected()">Unmark</button>
+                            <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-300 transition duration-300" onclick="interviewSelected()">Interview</button>
                         @endif
                         <button class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-300 transition duration-300" onclick="rejectSelected()">Reject</button>
                     </div>
+                    @endrole
+                    @role('manager')
+                        <button class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-300 transition duration-300" onclick="rejectSelected()">Reject</button>
+                    @endrole
             
                     <!-- Right side search form -->
                     <form method="GET" action="{{ route('application.index',$job) }}" class="flex w-full md:w-auto">

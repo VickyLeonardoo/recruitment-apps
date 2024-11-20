@@ -4,7 +4,7 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Staff List') }}
             </h2>
-            @role('superadmin')
+            @role('superadmin|admin')
                 <a href="{{ route('staff.create') }}" class="font-bold py-2 px-4 bg-indigo-700 hover:bg-indigo-400 text-white rounded-full">
                     Add New
                 </a>

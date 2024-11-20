@@ -44,21 +44,23 @@
             </div>
 
                 <!-- Recommendation Button -->
-            <div class="flex mt-6">
-                <form method="POST">
-                    @csrf
-                    @method('PUT')
-                    @if ($application->is_recomended == true)
-                        <button formaction="{{ route('application.recommendation', $application) }}" class="bg-red-500 text-white font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-300">
-                            Cancel Recommendation
-                        </button>
-                    @else
-                        <button formaction="{{ route('application.recommendation', $application) }}" class="bg-blue-500 text-white font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-300">
-                            Recommendation
-                        </button>
-                    @endif
-                </form>
-            </div>
+            @role('superadmin|manager')
+                <div class="flex mt-6">
+                    <form method="POST">
+                        @csrf
+                        @method('PUT')
+                        @if ($application->is_recomended == true)
+                            <button formaction="{{ route('application.recommendation', $application) }}" class="bg-red-500 text-white font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-300">
+                                Cancel Recommendation
+                            </button>
+                        @else
+                            <button formaction="{{ route('application.recommendation', $application) }}" class="bg-blue-500 text-white font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-300">
+                                Recommendation
+                            </button>
+                        @endif
+                    </form>
+                </div>
+            @endrole
 
             <!-- Section Title for Personal Information -->
             <div class="text-xl font-semibold mt-8 mb-4 text-center">

@@ -11,7 +11,7 @@ class ScheduleUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->hasAnyRole(['superadmin','admin']);
+        return $this->user()->hasAnyRole(['superadmin','admin','hr']);
     }
 
     /**

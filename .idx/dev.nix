@@ -43,6 +43,7 @@
       "MehediDracula.php-namespace-resolver"
       "wongjn.php-sniffer"
       "Hermitter.oh-lucy-vscode"
+      "bradlc.vscode-tailwindcss"
     ];
     workspace = {
       # Runs when a workspace is first created with this `dev.nix` file

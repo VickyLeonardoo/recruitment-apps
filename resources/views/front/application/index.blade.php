@@ -23,7 +23,7 @@
             <!-- Applications List -->
             <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden">
                 <div class="divide-y divide-gray-100">
-                    @foreach ($applications as $application)
+                    @forelse ($applications as $application)
                         <div class="p-6 hover:bg-gray-50 transition duration-150">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center space-x-6">
@@ -77,8 +77,17 @@
                                 </div>
                             @endif
                         </div>
-                    @endforeach
-
+                    @empty
+                    <div class="p-6 text-center">
+                        <div class="flex flex-col items-center">
+                            <svg class="w-16 h-16 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9.75 3.75l4.5 4.5m0 0l-4.5 4.5m4.5-4.5H3.75m16.5 0h-4.5M3 21h18a2 2 0 002-2V5a2 2 0 00-2-2H3a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                            </svg>
+                            <h4 class="text-xl font-semibold text-gray-600">Tidak ada data yang ditemukan</h4>
+                        </div>
+                    </div>
+                    @endforelse
                 </div>
             </div>
             <script>

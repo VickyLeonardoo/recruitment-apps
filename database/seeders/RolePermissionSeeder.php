@@ -42,6 +42,27 @@ class RolePermissionSeeder extends Seeder
             'email_verified_at' => '2021-01-01 00:00:00',
         ]);
 
+        $userAdminRole = User::create([
+            'name' => 'Christian',
+            'email' => 'admin@example.com',
+            'password' => bcrypt('123'),
+            'email_verified_at' => '2021-01-01 00:00:00',
+        ]);
+
+        $userStaffManager = User::create([
+            'name' => 'Fedro',
+            'email' => 'manager@example.com',
+            'password' => bcrypt('123'),
+            'email_verified_at' => '2021-01-01 00:00:00',
+        ]);
+
+        $userStaffHr = User::create([
+            'name' => 'Leonardo',
+            'email' => 'hr@example.com',
+            'password' => bcrypt('123'),
+            'email_verified_at' => '2021-01-01 00:00:00',
+        ]);
+
         $user = User::create([
             'name' => 'Ordep',
             'email' => 'user1@example.com',
@@ -60,5 +81,8 @@ class RolePermissionSeeder extends Seeder
 
         $userSuperAdmin->assignRole($superAdminRole);
         $user->assignRole($applicant);
+        $userAdminRole->assignRole($adminRole);
+        $userStaffManager->assignRole($staffManager);
+        $userStaffHr->assignRole($staffHr);
     }
 }
