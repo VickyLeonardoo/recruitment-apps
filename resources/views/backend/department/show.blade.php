@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex flex-row justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Manage Department') }}
+                {{ __('Kelola Department') }}
             </h2>
             @role('superadmin')
                 <a href="{{ route('department.index') }}" class="font-bold py-2 px-4 bg-indigo-700 text-white rounded-full">
@@ -39,7 +39,7 @@
                     </div>
                     <div class="flex flex-row items-center gap-x-3">
                         <a href="{{ route('department.edit', $department->id) }}" class="font-bold py-2 px-4 bg-indigo-700 text-white rounded-full">
-                            Edit Department
+                            Edit Department Test
                         </a>
                         <form action="{{ route('department.destroy', $department) }}" method="POST">
                             @csrf

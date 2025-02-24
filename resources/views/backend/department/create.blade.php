@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex flex-row justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Add Department') }}
+                {{ __('Tambah Department') }}
             </h2>
             <a href="{{ route('department.index') }}" class="font-bold py-2 px-4 bg-indigo-700 text-white rounded-full">
                 Back

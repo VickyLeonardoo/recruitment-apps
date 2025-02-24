@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex flex-row justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Department List') }}
+                {{ __('Daftar Department') }}
             </h2>
             @role('superadmin|admin')
                 <a href="{{ route('department.create') }}" class="font-bold py-2 px-4 bg-indigo-700 hover:bg-indigo-400 text-white rounded-full">
@@ -47,13 +47,13 @@
                         <tr class="text-left">
                             <th
                                 class="bg-red-50 sticky top-0 border-b border-gray-200 px-6 py-3 text-red-600 font-bold tracking-wider uppercase text-xs">
-                                Code</th>
+                                Kode</th>
                             <th
                                 class="bg-red-50 sticky top-0 border-b border-gray-200 px-6 py-3 text-red-600 font-bold tracking-wider uppercase text-xs">
-                                Name</th>
+                                Nama</th>
                             <th
                                 class="bg-red-50 sticky top-0 border-b border-gray-200 px-6 py-3 text-red-600 font-bold tracking-wider uppercase text-xs">
-                                Action</th>
+                                Aksi</th>
                         </tr>
                     </thead>
                     <tbody id="users-table-body">

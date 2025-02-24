@@ -47,7 +47,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-10 flex flex-col gap-y-5">
                 <div class="flex flex-col md:flex-row justify-between items-center mb-6">
                     <!-- Left side buttons -->
-                    @role('hr|admin')
+                    @role('hr|admin|superadmin')
                     <div class="flex space-x-2 mb-4 md:mb-0">
                         @if ($job->status != 'Done')
                             <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-300 transition duration-300" onclick="markSelected()">Mark</button>

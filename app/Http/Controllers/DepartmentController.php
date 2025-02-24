@@ -31,10 +31,9 @@ class DepartmentController extends Controller
         return view('backend.department.index', [
             'departments' => $departments,
         ]);
-
     }
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new resource. 
      */
     public function create()
     {

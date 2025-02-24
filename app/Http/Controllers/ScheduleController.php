@@ -194,7 +194,7 @@ class ScheduleController extends Controller
         return redirect()->back()->with('success','Status successfully updated to upcoming');
     }
 
-    public function set_cancelled(Schedule $schedule){
+    public function set_cancelled(Schedule $schedule){ 
         
         $users = $schedule->line->pluck('application.user')->unique();
         foreach ($users as $user) {

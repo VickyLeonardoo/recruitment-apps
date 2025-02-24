@@ -75,6 +75,13 @@
                         <x-input-error :messages="$errors->get('responsibilities')" class="mt-2" />
                     </div>
 
+                    <div class="mt-4">
+                        <x-input-label for="max_pax" :value="__('max_pax*')" />
+                        <textarea id="max_pax" name="max_pax" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" rows="4" required>{{ old('max_pax') }}</textarea>
+                        <x-input-error :messages="$errors->get('max_pax')" class="mt-2" />
+                    </div>
+
+
                     <div class="mt-4 flex">
                         <!-- Start Date -->
                         <div class="w-1/2 pr-2">
@@ -90,7 +97,7 @@
                             <x-input-error :messages="$errors->get('end_date')" class="mt-2" />
                         </div>
                     </div>
-
+ 
                     <div class="mt-4 flex">
                         <!-- Start Date -->
                         <div class="w-1/2 pr-2">
