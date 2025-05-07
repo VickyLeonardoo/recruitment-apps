@@ -17,20 +17,47 @@ class JobVacancyController extends Controller
     {
         $jobs = JobVacancy::with('position', 'application'); // Eager load relationships
  
-        if ($request->has('search')) {
-            $query = $request->search;
-
-            // Add search on 'code', 'start_date', 'end_date', 'status', and 'position' relationship
-            $jobs = $jobs->where(function ($q) use ($query) {
-                $q->where('code', 'like', "%{$query}%")
-                ->orWhere('start_date', 'like', "%{$query}%")
-                ->orWhere('end_date', 'like', "%{$query}%")
-                ->orWhere('status', 'like', "%{$query}%")
-                ->orWhereHas('position', function ($q) use ($query) {
-                    $q->where('name', 'like', "%{$query}%");
-                });
+        if (auth()->user()->hasRole('manager')) {
+            $user_dept = auth()->user()->staff->department_id;
+            $jobs = $jobs->whereHas('position', function ($q) use ($user_dept) {
+                $q->where('department_id', $user_dept);
             });
+
+            
+            
+            $user_dept = auth()->user()->staff->department_id;
+            if ($request->has('search')) {
+                $query = $request->search;
+    
+                // Add search on 'code', 'start_date', 'end_date', 'status', and 'position' relationship
+                $jobs = $jobs->where(function ($q) use ($query) {
+                    $q->where('code', 'like', "%{$query}%")
+                    ->orWhere('start_date', 'like', "%{$query}%")
+                    ->orWhere('end_date', 'like', "%{$query}%")
+                    ->orWhere('status', 'like', "%{$query}%")
+                    ->orWhereHas('position', function ($q) use ($query) {
+                        $q->where('name', 'like', "%{$query}%");
+                    }); 
+                });
+            }
+            
+        }else{
+            if ($request->has('search')) {
+                $query = $request->search;
+    
+                // Add search on 'code', 'start_date', 'end_date', 'status', and 'position' relationship
+                $jobs = $jobs->where(function ($q) use ($query) {
+                    $q->where('code', 'like', "%{$query}%")
+                    ->orWhere('start_date', 'like', "%{$query}%")
+                    ->orWhere('end_date', 'like', "%{$query}%")
+                    ->orWhere('status', 'like', "%{$query}%")
+                    ->orWhereHas('position', function ($q) use ($query) {
+                        $q->where('name', 'like', "%{$query}%");
+                    }); 
+                });
+            }
         }
+        
 
         // Order by created_at or another date column, descending to get the latest first
         $jobs = $jobs->orderBy('id', 'desc')->paginate(10);

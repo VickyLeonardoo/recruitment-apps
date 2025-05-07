@@ -85,11 +85,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('job.set.done');
 
     Route::resource('job',JobVacancyController::class)
-        ->middleware('role:superadmin|admin|hr');
+        ->middleware('role:superadmin|admin|hr|manager');
 
     Route::get('job/{job:id?}/application', [ApplicationController::class, 'index'])
         ->name('application.index')
-        ->middleware('role:superadmin|admin|hr');
+        ->middleware('role:superadmin|admin|hr|manager');
 
     Route::put('/application/recomendation/{application:id}', [ApplicationController::class, 'set_recommendation'])
         ->name('application.recommendation')
@@ -105,7 +105,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/application/interview/{ids}', [ApplicationController::class, 'set_interview'])
         ->name('application.interview')
-        ->middleware('role:superadmin|admin|hr');
+        ->middleware('role:superadmin|admin|hr|manager');
 
     Route::get('/application/reject/{ids}', [ApplicationController::class, 'set_reject'])
         ->name('application.reject')
@@ -113,49 +113,49 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('application', ApplicationController::class)
         ->except(['index'])
-        ->middleware('role:superadmin|admin|hr');
+        ->middleware('role:superadmin|admin|hr|manager');
 
-    Route::post('/schedules/{id}/generate-applicants', [ScheduleController::class, 'generate_applicant'])->middleware('role:superadmin|hr')->name('schedules.generate.applicants');
+    Route::post('/schedules/{id}/generate-applicants', [ScheduleController::class, 'generate_applicant'])->middleware('role:superadmin|hr|manager')->name('schedules.generate.applicants');
 
-    Route::post('/schedules/sent-invitation/{schedule:id}', [ScheduleController::class, 'sent_invitation_mail'])->middleware('role:superadmin|hr')->name('schedules.sent.invitation');
+    Route::post('/schedules/sent-invitation/{schedule:id}', [ScheduleController::class, 'sent_invitation_mail'])->middleware('role:superadmin|hr|manager')->name('schedules.sent.invitation');
 
 
     Route::get('/schedule/upcoming/{schedule:id}', [ScheduleController::class, 'set_upcoming'])
         ->name('schedule.set.upcoming')
-        ->middleware('role:superadmin|hr');
+        ->middleware('role:superadmin|hr|manager');
 
     Route::get('/schedule/cancelled/{schedule:id}', [ScheduleController::class, 'set_cancelled'])
         ->name('schedule.set.cancelled')
-        ->middleware('role:superadmin|admin|hr');
+        ->middleware('role:superadmin|admin|hr|manager');
 
     Route::get('/schedule/draft/{schedule:id}', [ScheduleController::class, 'set_draft'])
         ->name('schedule.set.draft')
-        ->middleware('role:superadmin|admin|hr');
+        ->middleware('role:superadmin|admin|hr|manager');
 
     Route::get('/schedule/done/{schedule:id}', [ScheduleController::class, 'set_done'])
         ->name('schedule.set.done')
-        ->middleware('role:superadmin|admin|hr');
+        ->middleware('role:superadmin|admin|hr|manager');
 
     Route::resource('schedule', ScheduleController::class)
-        ->middleware('role:superadmin|admin|hr');
+        ->middleware('role:superadmin|admin|hr|manager');
 
     Route::get('/schedule/line/mark/{ids}', [ScheduleLineController::class, 'set_mark'])
         ->name('schedule.line.mark')
-        ->middleware('role:superadmin|hr|admin');
+        ->middleware('role:superadmin|hr|manager|admin');
 
     Route::get('/schedule/line/unmark/{ids}', [ScheduleLineController::class, 'set_unmark'])
         ->name('schedule.line.unmark')
-        ->middleware('role:superadmin|hr|admin');
+        ->middleware('role:superadmin|hr|admin|manager');
 
     Route::get('/schedule/line/approve/{ids}', [ScheduleLineController::class, 'set_approve'])
         ->name('schedule.line.approve')
-        ->middleware('role:superadmin|hr|admin');
+        ->middleware('role:superadmin|hr|admin|manager');
 
     Route::get('/schedule/line/reject/{ids}', [ScheduleLineController::class, 'set_reject'])
         ->name('schedule.line.reject')
-        ->middleware('role:superadmin|hr|admin');
+        ->middleware('role:superadmin|hr|admin|manager');
         
-    Route::delete('/schedule/line/{line}', [ScheduleLineController::class, 'destroy'])->middleware('role:superadmin|hr|admin')->name('schedule.line.destroy');
+    Route::delete('/schedule/line/{line}', [ScheduleLineController::class, 'destroy'])->middleware('role:superadmin|hr|admin|manager')->name('schedule.line.destroy');
 });
 
 require __DIR__.'/auth.php';

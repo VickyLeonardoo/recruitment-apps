@@ -73,5 +73,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function language_details(){
         return $this->hasMany(LanguageDetails::class);
     }
+
+    public function staff(){
+        return $this->hasOne(Staff::class);
+    }
 }
  

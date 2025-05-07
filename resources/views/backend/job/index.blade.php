@@ -80,7 +80,7 @@
                                 <tr>
                         @empty
                         <tr>
-                            <td colspan="4" class="text-center border-b border-gray-200 px-6 py-4">No data found</td>
+                            <td colspan="5" class="text-center border-b border-gray-200 px-6 py-4">No data found</td>
                         </tr>
                         @endforelse
                     </tbody>
