@@ -87,6 +87,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('job',JobVacancyController::class)
         ->middleware('role:superadmin|admin|hr|manager');
 
+    Route::get('/generate-job-code', [JobVacancyController::class, 'generateCode'])->name('generate.job.code');
+
+
     Route::get('job/{job:id?}/application', [ApplicationController::class, 'index'])
         ->name('application.index')
         ->middleware('role:superadmin|admin|hr|manager');

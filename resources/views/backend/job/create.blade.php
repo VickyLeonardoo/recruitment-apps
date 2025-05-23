@@ -22,9 +22,30 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-10 flex flex-col gap-y-5">
                 <form method="POST" action="{{ route('job.store') }}" enctype="multipart/form-data">
                     @csrf
+                    <div class="mt-4" x-data="{ positionId: '', generatedCode: '' }" x-init="$watch('positionId', value => {
+                        if (value) {
+                            fetch(`/generate-job-code?position_id=${value}`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    generatedCode = data.code;
+                                    document.getElementById('code').value = data.code;
+                                });
+                        }
+                    })">
+                        <x-input-label for="position_id" :value="__('Position')" />
+                        <select x-model="positionId" name="position_id" id="position_id" class="rounded-lg pl-3 w-full border border-slate-300">
+                            <option value="" disabled selected>Choose Position</option>
+                            @foreach ($positions as $position)
+                                <option value="{{ $position->id }}" {{ old('position_id') == $position->id  ? 'selected':''}}>{{ $position->name }}</option>
+                            @endforeach
+                        </select>
+                        <x-input-error :messages="$errors->get('position_id')" class="mt-2" />
+                    </div>
+                    
+
                     <div class="mt-4">
                         <x-input-label for="code" :value="__('Code')" />
-                        <x-text-input id="code" class="block mt-1 w-full" type="text" name="code" :value="old('code')"  autofocus autocomplete="code" />
+                        <x-text-input id="code" class="block mt-1 w-full" readonly type="text" name="code" :value="old('code')"  autofocus autocomplete="code" />
                         <x-input-error :messages="$errors->get('code')" class="mt-2" />
                     </div>
                         
@@ -40,17 +61,7 @@
                         <x-input-error :messages="$errors->get('description')" class="mt-2" />
                     </div>
 
-                    <div class="mt-4">
-                        <x-input-label for="position_id" :value="__('Position')" />
-                        <select name="position_id" id="position_id" class="rounded-lg pl-3 w-full border border-slate-300">
-                            <option value="" disabled selected>Choose Position</option>
-                            @foreach ($positions as $position)
-                                <option value="{{ $position->id }}" {{ old('position_id') == $position->id  ? 'selected':''}}>{{ $position->name }}</option>
-                            @endforeach
-                        </select>
-
-                        <x-input-error :messages="$errors->get('position_id')" class="mt-2" />
-                    </div>
+                    
 
                     <div class="mt-4">
                         <x-input-label for="type" :value="__('Type')" />

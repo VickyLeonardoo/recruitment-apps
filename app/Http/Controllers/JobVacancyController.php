@@ -73,6 +73,7 @@ class JobVacancyController extends Controller
     public function create()
     {
         $positions = Position::all();
+        
         return view('backend.job.create',[
             'positions' => $positions->load('department'),
         ]);
@@ -176,6 +177,31 @@ class JobVacancyController extends Controller
         $job->save();
         return redirect()->route('job.show',$job)->with('success','Job Updated Successfully');
     }
+
+    public function generateCode(Request $request)
+    {
+        $position = Position::with('department')->findOrFail($request->position_id);
+        $departmentCode = $position->department->code;
+        $year = date('Y');
+
+        $prefix = "{$departmentCode}/{$year}/";
+
+        $latest = JobVacancy::where('code', 'like', "{$prefix}%")
+            ->orderBy('code', 'desc')
+            ->first();
+
+        if ($latest) {
+            $lastIncrement = (int) substr($latest->code, strrpos($latest->code, '/') + 1);
+            $newIncrement = str_pad($lastIncrement + 1, 4, '0', STR_PAD_LEFT);
+        } else {
+            $newIncrement = '0001';
+        }
+
+        $generatedCode = $prefix . $newIncrement;
+
+        return response()->json(['code' => $generatedCode]);
+    }
+
 
     public function view_applicant(JobVacancy $job){
      
