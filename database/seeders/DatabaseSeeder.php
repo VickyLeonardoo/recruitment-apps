@@ -19,7 +19,6 @@ class DatabaseSeeder extends Seeder
             RolePermissionSeeder::class,
             DepartmentSeeder::class,
             QuestionSeeder::class,
-            ChoiceSeeder::class,
             PositionSeeder::class,
             JobVacancySeeder::class,
         ]);
