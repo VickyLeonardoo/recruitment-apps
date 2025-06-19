@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PositionStoreRequest;
 use App\Http\Requests\PositionUpdateRequest;
 use App\Models\Department;
+use App\Models\JobVacancy;
 use App\Models\Position;
 use Illuminate\Http\Request;
 
@@ -77,7 +78,12 @@ class PositionController extends Controller
      */
     public function destroy(Position $position)
     {
+        $check_position = JobVacancy::where('position_id',$position->id)->first();
+        if ($check_position) {
+            return redirect()->back()->with('error','This position is used in job vacancy');
+        }
         $position->delete();
         return redirect()->back()->with('success','Position deleted successfully!');
+
     }
 }
